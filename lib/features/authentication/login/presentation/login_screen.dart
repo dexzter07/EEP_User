@@ -4,6 +4,7 @@ import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
+import 'package:epp_user/core/widgets/custom_inkwell.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/core/widgets/custom_textfield.dart';
 import 'package:epp_user/features/authentication/login/application/login_controller.dart';
@@ -67,7 +68,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 16),
+                          const SizedBox(height: 52),
                           Text(
                             "Welcome to",
                             textAlign: TextAlign.center,
@@ -86,7 +87,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                                       fontFamily: 'EbGaramond',
                                       fontWeight: FontWeight.w600,
                                       color: ColorConstant.primaryColor,
-                                      fontSize: 38,
+                                      fontSize: 32,
                                     ),
                             textScaler: const TextScaler.linear(1),
                           ),
@@ -125,60 +126,40 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: RichText(
-                  text: TextSpan(
-                    text: 'By continuing, you accept to ',
-                    style: const TextStyle(
+              CustomInkWell(
+                onTap: () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  context.push(
+                    AppRoutes.signUpPhase1Screen,
+                  );
+                },
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: const TextStyle(
                         color: Colors.black,
                         fontSize: 14,
-                        fontFamily: "Poppins"),
-                    // Default text style
-                    children: [
-                      TextSpan(
-                        text: 'Privacy Policy',
-                        style: TextStyle(
-                          color: ColorConstant.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Poppins",
-                        ),
-                        recognizer: TapGestureRecognizer()..onTap = () {},
+                        fontFamily: "Poppins",
                       ),
-                      const TextSpan(
-                        text: ' & ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontFamily: "Poppins",
+                      children: [
+                        TextSpan(
+                          text: 'Register',
+                          style: TextStyle(
+                            color: ColorConstant.primaryColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            fontFamily: "Poppins",
+                          ),
                         ),
-                      ),
-                      TextSpan(
-                        text: 'Terms of Services',
-                        style: TextStyle(
-                          color: ColorConstant.primaryColor,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Poppins",
-                        ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            // Handle Terms of Services tap
-                          },
-                      ),
-                      const TextSpan(
-                        text: ' of AppName',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 14,
-                          fontFamily: "Poppins",
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 8),
               _loginButton(
                 context,
                 loginApiState is LoadingState,
@@ -218,13 +199,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       margin: const EdgeInsets.symmetric(horizontal: 16),
       borderRadius: 8,
       onTap: () async {
+        context.push(
+          AppRoutes.bottomNavScreen,
+        );
+
+        /*
         if (_formKey.currentState!.validate()) {
           FocusManager.instance.primaryFocus?.unfocus();
           await ref.read(loginController.notifier).login(
                 _mobileNumberController.text,
                 _otpController.text,
               );
-        }
+        }*/
       },
     );
   }

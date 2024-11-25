@@ -154,11 +154,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                       child: _isTextObscure
                           ? const Icon(
                               Icons.remove_red_eye,
-                              color: Colors.red,
+                              color: Colors.grey,
                             )
                           : const Icon(
                               Icons.visibility_off,
-                              color: Colors.red,
+                              color: Colors.grey,
                             ),
                     )
                   : widget.suffixIcon,
