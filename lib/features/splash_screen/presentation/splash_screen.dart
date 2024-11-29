@@ -1,7 +1,9 @@
 import 'package:epp_user/app/routes/routes.dart';
+import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/features/splash_screen/application/splash_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -21,6 +23,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   void initState() {
+    _changeStatusBarColor();
     checkForAccessToken();
     super.initState();
   }
@@ -37,5 +40,15 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return CustomScaffold(body: Container());
+  }
+
+  void _changeStatusBarColor() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: ColorConstant.primaryColor,
+        statusBarIconBrightness: Brightness.light, // For Android
+        statusBarBrightness: Brightness.light, // For IOS
+      ),
+    );
   }
 }

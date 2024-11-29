@@ -1,5 +1,4 @@
 import 'package:epp_user/core/base_class/base_state.dart';
-import 'package:epp_user/core/widgets/custom_error_widget.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/features/activities/application/activity_controller.dart';
 import 'package:epp_user/features/activities/presentation/widgets/activity_widget.dart';
@@ -44,9 +43,7 @@ class _ActivitiesListScreenState extends ConsumerState<ActivitiesListScreen> {
     final fetchActivityListApiState = ref.watch(fetchActivityListProvider);
     return CustomScaffold(
         hideLeadingIcon: true,
-        padding: const EdgeInsets.only(
-          top: 16,
-        ),
+        padding: const EdgeInsets.only(top: 16),
         appBarTitle: 'Activity List',
         body: fetchActivityListApiState is LoadingState
             ? const Center(child: CircularProgressIndicator())

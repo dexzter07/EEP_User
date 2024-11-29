@@ -2,8 +2,10 @@ import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/features/activities/presentation/activities_list_screen.dart';
 import 'package:epp_user/features/activities/presentation/create_activity_screen.dart';
+import 'package:epp_user/features/resources/presentation/resources_screen.dart';
 import 'package:epp_user/features/temp_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -22,10 +24,16 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
   int _index = 0;
   final List<Widget> _screenList = const [
     ActivitiesListScreen(),
+    ResourcesScreen(),
     TempScreen(),
-    TempScreen(),
-    TempScreen(),
+    ResourcesScreen(),
   ];
+
+  @override
+  void initState() {
+    _changeStatusBarColor();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,12 +94,12 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
             'Home',
           ),
           _customBottomNavigationBarItem(
-            Icons.history,
-            'Performance',
+            Icons.area_chart,
+            'Resources',
           ),
           _customBottomNavigationBarItem(
-            Icons.calendar_month,
-            'Past Activities',
+            Icons.local_activity_outlined,
+            'Activities',
           ),
           _customBottomNavigationBarItem(
             Icons.person_2_rounded,
@@ -120,6 +128,16 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
         ),
       ),
       label: title,
+    );
+  }
+
+  void _changeStatusBarColor() {
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        statusBarColor: ColorConstant.statusBarColor,
+        statusBarIconBrightness: Brightness.dark, // For Android
+        statusBarBrightness: Brightness.dark, // For IOS
+      ),
     );
   }
 }

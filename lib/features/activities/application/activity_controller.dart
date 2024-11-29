@@ -2,6 +2,7 @@ import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/features/activities/infrastructure/repository/activity_repository.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_list_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_response.dart';
+import 'package:epp_user/features/activities/infrastructure/response/comment_list_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// @author: Sagar K.C.
@@ -18,9 +19,8 @@ class ActivityController extends StateNotifier<BaseState> {
     ActivityResponseData activityResponseData,
   ) async {
     state = LoadingState();
-    final loginResponse =
-        await _activityRepo.createActivity(activityResponseData);
-    state = loginResponse.fold(
+    final response = await _activityRepo.createActivity(activityResponseData);
+    state = response.fold(
       (success) => SuccessState<ActivityCreateResponse>(data: success),
       (failure) => FailureState(failureResponse: failure),
     );
@@ -32,14 +32,24 @@ class ActivityController extends StateNotifier<BaseState> {
   ) async {
     state = LoadingState();
     await Future.delayed(const Duration(seconds: 2));
-    final loginResponse = await _activityRepo.fetchActivityList(
+    final response = await _activityRepo.fetchActivityList(
       pageNumber,
       activityType,
     );
-    state = loginResponse.fold(
+    state = response.fold(
       (success) {
         return SuccessState<ActivityListResponse>(data: success);
       },
+      (failure) => FailureState(failureResponse: failure),
+    );
+  }
+
+  Future<void> fetchCommentList(int activityId) async {
+    state = LoadingState();
+    await Future.delayed(const Duration(seconds: 2));
+    final response = await _activityRepo.fetchCommentList(activityId);
+    state = response.fold(
+      (success) => SuccessState<List<CommentData>?>(data: success.data),
       (failure) => FailureState(failureResponse: failure),
     );
   }

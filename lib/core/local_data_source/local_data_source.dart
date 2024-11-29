@@ -1,4 +1,3 @@
-
 import 'package:epp_user/core/local_data_source/shared_preference_constants.dart';
 import 'package:epp_user/core/local_data_source/shared_preference_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,13 +9,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final localDataSourceProvider = StateProvider((ref) => LocalDataSource());
 
 class LocalDataSource {
-
   Future<void> saveAccessToken(String accessToken) async {
     try {
       final SharedPreferencesService sharedPreferencesService =
           SharedPreferencesService();
       sharedPreferencesService.saveData(
-          SharedPreferenceConstants.accessToken, accessToken);
+        SharedPreferenceConstants.accessToken,
+        accessToken,
+      );
     } catch (e) {
       throw 'Error while saving access token : $e';
     }
@@ -25,35 +25,39 @@ class LocalDataSource {
   Future<String> getAccessToken() async {
     try {
       final SharedPreferencesService sharedPreferencesService =
-      SharedPreferencesService();
-      final accessToken = sharedPreferencesService
-          .getStringValue(SharedPreferenceConstants.accessToken);
+          SharedPreferencesService();
+      final accessToken = sharedPreferencesService.getStringValue(
+        SharedPreferenceConstants.accessToken,
+      );
       return accessToken;
     } catch (e) {
       throw 'Error while fetching access token : $e';
     }
   }
 
-  Future<void> saveRestaurantId(String restaurantId) async {
+  Future<void> saveTempAccessToken(String accessToken) async {
     try {
       final SharedPreferencesService sharedPreferencesService =
-      SharedPreferencesService();
+          SharedPreferencesService();
       sharedPreferencesService.saveData(
-          SharedPreferenceConstants.restaurantId, restaurantId);
+        SharedPreferenceConstants.tempAccessToken,
+        accessToken,
+      );
     } catch (e) {
-      throw 'Error while saving access restaurantId : $e';
+      throw 'Error while saving access token : $e';
     }
   }
 
-  Future<String> getRestaurantId() async {
+  Future<String> getTempAccessToken() async {
     try {
       final SharedPreferencesService sharedPreferencesService =
-      SharedPreferencesService();
-      final accessToken = sharedPreferencesService
-          .getStringValue(SharedPreferenceConstants.restaurantId);
+          SharedPreferencesService();
+      final accessToken = sharedPreferencesService.getStringValue(
+        SharedPreferenceConstants.tempAccessToken,
+      );
       return accessToken;
     } catch (e) {
-      throw 'Error while fetching restaurantId: $e';
+      throw 'Error while fetching access token : $e';
     }
   }
 }

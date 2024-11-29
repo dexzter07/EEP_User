@@ -11,22 +11,10 @@ final providerContainer = ProviderContainer();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  _changeStatusBarColor();
   await SharedPreferencesService.initializePreferences();
 
   runApp(UncontrolledProviderScope(
     container: providerContainer,
     child: const MyApp(),
   ));
-}
-
-void _changeStatusBarColor() {
-  SystemChrome.setSystemUIOverlayStyle(
-    SystemUiOverlayStyle(
-      statusBarColor: ColorConstant.scaffoldColor,
-      statusBarIconBrightness: Brightness.dark, // For Android
-      statusBarBrightness: Brightness.light, // For IOS
-    ),
-  );
 }

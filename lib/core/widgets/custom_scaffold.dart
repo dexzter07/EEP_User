@@ -17,6 +17,7 @@ class CustomScaffold extends StatelessWidget {
   final bool hideLeadingIcon;
   final bool centerTitle;
   final bool enableSafeArea;
+  final Color? backgroundColor;
   final void Function()? onLeadingIconPress;
 
   const CustomScaffold({
@@ -27,8 +28,9 @@ class CustomScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.hideLeadingIcon = false,
     this.centerTitle = true,
-    this.enableSafeArea = false,
+    this.enableSafeArea = true,
     this.onLeadingIconPress,
+    this.backgroundColor,
     super.key,
   });
 
@@ -37,10 +39,11 @@ class CustomScaffold extends StatelessWidget {
     return SafeArea(
       top: enableSafeArea,
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: appBarTitle == null
             ? null
             : AppBar(
-                elevation: 1,
+                elevation: 4,
                 centerTitle: centerTitle,
                 title: Text(
                   appBarTitle ?? '',
@@ -55,7 +58,7 @@ class CustomScaffold extends StatelessWidget {
                 backgroundColor: ColorConstant.scaffoldColor,
                 actions: [appBarActionButton ?? const SizedBox()],
               ),
-        backgroundColor: ColorConstant.scaffoldColor,
+        backgroundColor: backgroundColor ?? ColorConstant.scaffoldColor,
         body: Padding(
           padding:
               padding ?? const EdgeInsets.symmetric(vertical: 24, horizontal: 16),

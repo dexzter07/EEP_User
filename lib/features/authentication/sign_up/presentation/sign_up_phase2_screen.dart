@@ -1,5 +1,6 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/base_class/base_state.dart';
+import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
@@ -50,31 +51,39 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
     final apiState = ref.watch(signupApi2Controller);
 
     return BackButtonListener(
-      onBackButtonPressed: ()async{
-        ref.read(stepCounterCurrentIndexProvider.notifier).state  = 1;
+      onBackButtonPressed: () async {
+        ref.read(stepCounterCurrentIndexProvider.notifier).state = 1;
         context.pop();
         return true;
       },
       child: CustomScaffold(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 16,
-          ),
-          appBarTitle: 'Register',
-          onLeadingIconPress: (){
-            ref.read(stepCounterCurrentIndexProvider.notifier).state  = 1;
-            context.pop();
-          },
-          body: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Expanded(
-                  child: ListView(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    children: [
-                      Column(
+          enableSafeArea: false,
+          padding: EdgeInsets.zero,
+          backgroundColor: ColorConstant.primaryColor,
+          body: LayoutBuilder(builder: (context, constraints) {
+            return SingleChildScrollView(
+              physics: const ClampingScrollPhysics(),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Center(
+                    child: Container(
+                      padding: const EdgeInsets.all(16),
+                      margin: EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        bottom: MediaQuery.of(context)
+                            .viewInsets
+                            .bottom, // Adjust for keyboard
+                      ),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.white,
+                      ),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 8),
@@ -132,19 +141,19 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                               }
                             },
                           ),
+                          const SizedBox(height: 24),
+                          _continueButton(
+                            context,
+                            apiState is LoadingState,
+                          ),
                         ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
-                const SizedBox(height: 24),
-                _continueButton(
-                  context,
-                  apiState is LoadingState,
-                ),
-              ],
-            ),
-          )),
+              ),
+            );
+          })),
     );
   }
 
@@ -157,13 +166,21 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
       isLoading: isLoading,
       borderRadius: 8,
       onTap: () async {
-        ref.read(stepCounterCurrentIndexProvider.notifier).state = 3;
+        // if (_formKey.currentState?.validate() ?? false) {
         FocusManager.instance.primaryFocus?.unfocus();
-        context.push(
-          AppRoutes.signUpPhase3Screen,
-        );
+        _signupPhase2ApiCall();
+        // }
       },
     );
+  }
+
+  void _signupPhase2ApiCall() {
+    ref.read(signupApi2Controller.notifier).signupApi2(
+          schoolName: _schoolNameController.text,
+          schoolType: _typeController.text,
+          schoolAffiliation: _affiliationController.text,
+          schoolAddress: _addressController.text,
+        );
   }
 
   void _initialiseControllers() {
@@ -183,19 +200,13 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
 
   void _listenToSignupApi2Controller(BuildContext context) {
     ref.listen(signupApi2Controller, (previous, next) async {
-      if (next is SuccessState<int>) {
-        context.showToast(
-          message: "Login Successful",
-          toastType: ToastType.success,
+      if (next is SuccessState) {
+        ref.read(stepCounterCurrentIndexProvider.notifier).state = 3;
+        context.push(
+          AppRoutes.signUpPhase3Screen,
         );
-        await Future.delayed(const Duration(milliseconds: 600));
-        if (context.mounted) {
-          context.push(
-            AppRoutes.bottomNavScreen,
-          );
-        }
       } else if (next is FailureState) {
-        context.showToast(message: "We face some issue while logging you in");
+        context.showToast(message: next.failureResponse.errorMessage);
       }
     });
   }

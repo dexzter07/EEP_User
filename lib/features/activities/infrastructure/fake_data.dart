@@ -10,6 +10,7 @@ List<ActivityResponseData> activityResponseDataList = [
     image:
         "https://cavaliersouthbeach.com/wp-content/uploads/2024/01/Marathon-2024-1080x675.jpeg",
     userType: "1",
+    userImage: "https://www.themezaa.com/html/pofo/images/blog-img103.jpg",
     userId: 2,
     status: "Upcoming",
     id: 1,
@@ -23,6 +24,7 @@ List<ActivityResponseData> activityResponseDataList = [
     image:
         "https://img.freepik.com/premium-photo/group-people-practicing-yoga-forest-clearing_1126694-83500.jpg?w=360",
     userType: "2",
+    userImage: "https://www.themezaa.com/html/pofo/images/blog-img101.jpg",
     userId: 5,
     status: "Upcoming",
     id: 2,
@@ -36,6 +38,7 @@ List<ActivityResponseData> activityResponseDataList = [
     image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQY9IXaG5tkOeqXBWWcxmfep3OTzrTgaYd6HQ&s",
     userType: "3",
+    userImage: "https://www.themezaa.com/html/pofo/images/image-7.jpg",
     userId: 8,
     status: "Upcoming",
     id: 3,
@@ -49,6 +52,8 @@ List<ActivityResponseData> activityResponseDataList = [
     image:
         "https://media.licdn.com/dms/image/D5612AQEj91VNAVhtaQ/article-cover_image-shrink_720_1280/0/1694444142993?e=2147483647&v=beta&t=QkTAcfIXl511U02PXfsB6_RsX3e0gmMIDxToA4AuLvU",
     userType: "4",
+    userImage:
+        "https://monirakandha.com/personal/wp-content/uploads/2020/04/www.themezaa.com189image-2.jpg",
     userId: 10,
     status: "Upcoming",
     id: 4,
@@ -62,6 +67,7 @@ List<ActivityResponseData> activityResponseDataList = [
     image:
         "https://events.eletsonline.com/tech-talk/assets/images/ai-about.webp",
     userType: "5",
+    userImage: "https://www.themezaa.com/html/pofo/images/blog-img103.jpg",
     userId: 12,
     status: "Upcoming",
     id: 5,
@@ -133,3 +139,76 @@ String techTalkDescription =
     "📍 Location: Tech Innovation Hub, Seattle\n\n"
     "Don’t miss this chance to explore the future of technology. "
     "Register today to secure your spot at this inspiring event!";
+
+var fakeCommentListResponse = {
+  "status": "success",
+  "data": [
+    {
+      "id": 1,
+      "isMine": true,
+      "teacherName": "Subrata Jana",
+      "comment":
+          "This is the first comment from me and it is feeling awesome to post a comment in this app and all the developers are awesome here. They have great Technical skills and are very proficient in their domain.",
+      "nameInitial": "SJ",
+      "userImage":
+          "https://img.favpng.com/21/21/12/industry-user-experience-korskyrkan-rebro-lorem-ipsum-is-simply-dummy-text-of-the-printing-png-favpng-tgtynPexwfR1JhuQyzfwtVguC.jpg",
+    },
+    {
+      "id": 2,
+      "isMine": false,
+      "teacherName": "Manish Pandey",
+      "comment":
+          "This is fantastic work! Keep it up. Really appreciate your effort. I hope to see you soon in real.",
+      "nameInitial": "SJ",
+      "userImage":
+          "https://monirakandha.com/personal/wp-content/uploads/2020/04/www.themezaa.com189image-2.jpg",
+    },
+    {
+      "id": 3,
+      "isMine": false,
+      "teacherName": "Sagar KC",
+      "comment":
+          "I think this could be improved in some areas, but overall, a great job!",
+      "nameInitial": "SJ",
+      "userImage": "https://www.themezaa.com/html/pofo/images/image-7.jpg",
+    },
+    {
+      "id": 4,
+      "isMine": true,
+      "teacherName": "Subrata Jana",
+      "comment":
+          "Great job! The presentation was clear and concise. Looking forward to your next update.",
+      "nameInitial": "SJ",
+      "userImage":
+          "https://img.favpng.com/21/21/12/industry-user-experience-korskyrkan-rebro-lorem-ipsum-is-simply-dummy-text-of-the-printing-png-favpng-tgtynPexwfR1JhuQyzfwtVguC.jpg",
+    },
+    {
+      "id": 5,
+      "isMine": true,
+      "teacherName": "Subrata Jana",
+      "comment":
+          "This project demonstrates a high level of dedication and attention to detail. \nThe way you’ve organized and structured the information is impressive. \nWith a few minor adjustments, this could become a benchmark for others to follow.",
+      "nameInitial": "SJ",
+      "userImage":
+          "https://img.favpng.com/21/21/12/industry-user-experience-korskyrkan-rebro-lorem-ipsum-is-simply-dummy-text-of-the-printing-png-favpng-tgtynPexwfR1JhuQyzfwtVguC.jpg",
+    },
+    {
+      "id": 6,
+      "isMine": false,
+      "teacherName": "Dheraj Sharma",
+      "comment":
+          "Excellent work on tackling this complex problem! \nYou’ve showcased both innovation and practicality in your approach. \nI’m excited to see how this evolves in the coming stages with further refinement.",
+      "nameInitial": "SJ",
+      "userImage": "https://www.themezaa.com/html/pofo/images/blog-img103.jpg",
+    },
+    {
+      "id": 7,
+      "isMine": false,
+      "teacherName": "Sagar KC",
+      "comment":
+          "I think this could be improved in some areas, but overall, a great job!",
+      "nameInitial": "SKC",
+      "userImage": "https://www.themezaa.com/html/pofo/images/blog-img101.jpg",
+    },
+  ]
+};

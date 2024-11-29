@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 
 /// @author: Sagar K.C.
 /// @email: sagar.kc@fonepay.com
@@ -17,6 +18,44 @@ class FailureResponse {
     this.captcha,
     this.captchaToken,
   });
+
+  static FailureResponse getErrorMessage(Object error) {
+    if (error is DioException) {
+      if (error.type == DioExceptionType.connectionError) {
+        return FailureResponse(
+          'Connection Error',
+          exceptionType: CustomExceptionType.connectionError,
+        );
+      } else if (error.type == DioExceptionType.receiveTimeout ||
+          error.type == DioExceptionType.connectionTimeout) {
+        return FailureResponse(
+          'Connection Timeout',
+          exceptionType: CustomExceptionType.timeout,
+        );
+      } else if (error.response?.statusCode == 500) {
+        return FailureResponse(
+          'We faced some issue while processing the request',
+          statusCode: '500',
+        );
+      } else if (error.response?.data is Map<String, dynamic> &&
+          error.response?.data['message'] != null) {
+        return FailureResponse(
+          error.response?.data['message'] ?? '',
+          exceptionType: CustomExceptionType.other,
+        );
+      } else {
+        return FailureResponse(
+          'We faced some issue while processing the request',
+          exceptionType: CustomExceptionType.other,
+        );
+      }
+    } else {
+      return FailureResponse(
+        'We faced some issue while processing the request',
+        exceptionType: CustomExceptionType.other,
+      );
+    }
+  }
 
 /*  static FailureResponse getErrorMessage(Object error) {
     try {

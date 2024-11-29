@@ -1,5 +1,6 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/base_class/base_state.dart';
+import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
@@ -51,24 +52,35 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
     final apiState = ref.watch(signupApi1Controller);
 
     return CustomScaffold(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-        appBarTitle: 'Register',
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+      enableSafeArea: false,
+      backgroundColor: ColorConstant.primaryColor,
+      padding: EdgeInsets.zero,
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: MediaQuery.of(context)
+                          .viewInsets
+                          .bottom, // Adjust for keyboard
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white,
+                    ),
+                    child: Column(
                       children: [
-                        const SizedBox(height: 8),
                         const StepTrackerWidget(),
                         const SizedBox(height: 24),
                         CustomTextField(
@@ -79,24 +91,21 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter valid name";
-                            } else {
-                              return null;
                             }
+                            return null;
                           },
                         ),
                         const SizedBox(height: 4),
                         CustomTextField(
                           controller: _mobileNumberController,
                           labelText: "Mobile Number",
-                          prefixText: '+91-',
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.number,
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter valid mobile number";
-                            } else {
-                              return null;
                             }
+                            return null;
                           },
                         ),
                         const SizedBox(height: 4),
@@ -107,9 +116,8 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter valid email address";
-                            } else {
-                              return null;
                             }
+                            return null;
                           },
                         ),
                         const SizedBox(height: 4),
@@ -121,9 +129,8 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return "Please enter valid password";
-                            } else {
-                              return null;
                             }
+                            return null;
                           },
                         ),
                         const SizedBox(height: 4),
@@ -137,25 +144,25 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
                               return "Please enter valid password";
                             } else if (value != _passwordController.text) {
                               return "Password and confirm password must be the same.";
-                            } else {
-                              return null;
                             }
+                            return null;
                           },
                         ),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 24),
+                        _continueButton(
+                          context,
+                          apiState is LoadingState,
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 24),
-              _continueButton(
-                context,
-                apiState is LoadingState,
-              ),
-            ],
-          ),
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 
   Widget _continueButton(
@@ -167,13 +174,21 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
       isLoading: isLoading,
       borderRadius: 8,
       onTap: () async {
-        ref.read(stepCounterCurrentIndexProvider.notifier).state = 2;
+        // if (_formKey.currentState?.validate() ?? false) {
         FocusManager.instance.primaryFocus?.unfocus();
-        context.push(
-          AppRoutes.signUpPhase2Screen,
-        );
+        _signupPhase1ApiCall();
+        // }
       },
     );
+  }
+
+  void _signupPhase1ApiCall() {
+    ref.read(signupApi1Controller.notifier).signupApi1(
+          teacherName: _fullNameController.text,
+          teacherPhone: _mobileNumberController.text,
+          teacherEmail: _emailController.text,
+          password: _passwordController.text,
+        );
   }
 
   void _initialiseControllers() {
@@ -195,19 +210,13 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
 
   void _listenToSignupApi1Controller(BuildContext context) {
     ref.listen(signupApi1Controller, (previous, next) async {
-      if (next is SuccessState<int>) {
-        context.showToast(
-          message: "Login Successful",
-          toastType: ToastType.success,
+      if (next is SuccessState) {
+        ref.read(stepCounterCurrentIndexProvider.notifier).state = 2;
+        context.push(
+          AppRoutes.signUpPhase2Screen,
         );
-        await Future.delayed(const Duration(milliseconds: 600));
-        if (context.mounted) {
-          context.push(
-            AppRoutes.bottomNavScreen,
-          );
-        }
       } else if (next is FailureState) {
-        context.showToast(message: "We face some issue while logging you in");
+        context.showToast(message: next.failureResponse.errorMessage);
       }
     });
   }

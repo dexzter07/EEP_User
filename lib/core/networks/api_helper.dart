@@ -6,7 +6,7 @@ import 'dio_client.dart';
 final apiHelperProvider = Provider<ApiHelper>((ref) => ApiHelper(ref));
 
 class ApiHelper {
-  final ProviderRef _ref;
+  final Ref _ref;
 
   ApiHelper(this._ref);
 
@@ -25,7 +25,7 @@ class ApiHelper {
     dynamic data,
     Options? options,
     bool? isDelete,
-    bool? isPatch,
+    bool? isPut,
   }) async {
     return isDelete == true
         ? await _dio.delete(
@@ -34,8 +34,8 @@ class ApiHelper {
             queryParameters: queryParams,
             data: data,
           )
-        : isPatch == true
-            ? await _dio.patch(
+        : isPut == true
+            ? await _dio.put(
                 options: options,
                 endPoint,
                 queryParameters: queryParams,

@@ -1,6 +1,7 @@
+import 'package:epp_user/core/base_class/base_state.dart';
+import 'package:epp_user/features/authentication/login/infrastructure/request/login_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/base_class/base_state.dart';
 import '../infrastructure/repository/login_repository.dart';
 
 /// @author: Sagar K.C.
@@ -14,10 +15,17 @@ class LoginController extends StateNotifier<BaseState> {
 
   LoginRepository get _localAuthRepo => _ref.read(loginRepositoryProvider);
 
-  Future<void> login(String mobileNumber, String password) async {
+  Future<void> login({
+    String? phone,
+    String? password,
+  }) async {
+    state = LoadingState();
     final loginResponse = await _localAuthRepo.login(
-      mobileNumber.contains('+977') ? mobileNumber : '+977$mobileNumber',
-      password,
+      LoginRequest(
+        phone: phone,
+        password: password,
+        fcmToken: 'fcmToken',
+      ),
     );
     state = loginResponse.fold(
       (success) => SuccessState(data: success),

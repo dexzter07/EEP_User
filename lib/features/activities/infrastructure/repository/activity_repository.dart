@@ -1,8 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:epp_user/core/networks/api_helper.dart';
 import 'package:epp_user/core/networks/endpoint.dart';
+import 'package:epp_user/features/activities/infrastructure/fake_data.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_list_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_response.dart';
+import 'package:epp_user/features/activities/infrastructure/response/comment_list_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../core/base_class/failure_response.dart';
@@ -55,6 +57,24 @@ class ActivityRepository {
           ActivityListResponse.fromJson(response.data as Map<String, dynamic>);
       return Left(data);
     } catch (e) {
+      return Right(FailureResponse("Error"));
+    }
+  }
+
+  Future<Either<CommentListResponse, FailureResponse>> fetchCommentList(
+    int activityId,
+  ) async {
+    try {
+      final apiClient = _ref.read(apiHelperProvider);
+      final response = await apiClient.get(
+        endPoint: '${Endpoints.fetchCommentList}$activityId',
+      );
+      final data =
+          CommentListResponse.fromJson(response.data as Map<String, dynamic>);
+      return Left(data);
+    } catch (e) {
+      return Left(CommentListResponse.fromJson(fakeCommentListResponse));
+
       return Right(FailureResponse("Error"));
     }
   }

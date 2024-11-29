@@ -36,30 +36,41 @@ class ActivityResponseData {
   final String? activityTitle;
   final String? location;
   final String? activityDateAndTime;
+  final String? activityEndDateAndTime;
   final String? description;
   final int? activityType;
   final String? image;
   final String? status;
   final String? userType;
+  String? userImage;
+
   final int? userId;
   final String? createdAt;
   final String? updatedAt;
   final String? activityTypeName;
+  final int? totalLikes;
+  final int? totalComment;
+  final bool? isLiked;
 
   ActivityResponseData({
     this.id,
     this.activityTitle,
     this.location,
     this.activityDateAndTime,
+    this.activityEndDateAndTime,
     this.description,
     this.activityType,
     this.image,
     this.status,
     this.userType,
+    this.userImage,
     this.userId,
     this.createdAt,
     this.updatedAt,
     this.activityTypeName,
+    this.totalLikes,
+    this.totalComment,
+    this.isLiked,
   });
 
   factory ActivityResponseData.fromJson(Map<String, dynamic> json) {
@@ -68,15 +79,20 @@ class ActivityResponseData {
       activityTitle: json['activityTitle'] as String?,
       location: json['location'] as String?,
       activityDateAndTime: json['activityDateAndTime'] as String?,
+      activityEndDateAndTime: json['activityEndDateAndTime'] as String?,
       description: json['description'] as String?,
       activityType: json['activityType'] as int?,
       image: json['image'] as String?,
       status: json['status'] as String?,
       userType: json['userType'] as String?,
+      userImage: json['userImage'] as String?,
       userId: json['userId'] as int?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
       activityTypeName: json['activityTypeName'] as String?,
+      totalLikes: json['totalLikes'] as int?,
+      totalComment: json['totalComment'] as int?,
+      isLiked: json['isLiked'] as bool?,
     );
   }
 
@@ -86,15 +102,20 @@ class ActivityResponseData {
       'activityTitle': activityTitle,
       'location': location,
       'activityDateAndTime': activityDateAndTime,
+      'activityEndDateAndTime': activityEndDateAndTime,
       'description': description,
       'activityType': activityType,
       'image': image,
       'status': status,
       'userType': userType,
+      'userImage': userImage,
       'userId': userId,
       'created_at': createdAt,
       'updated_at': updatedAt,
       'activityTypeName': activityTypeName,
+      'totalLikes': totalLikes,
+      'totalComment': totalComment,
+      'isLiked': isLiked,
     };
   }
 }

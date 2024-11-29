@@ -8,7 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// @created_at: 12/13/2023, Wednesday
 
 class ResponseInterceptor extends Interceptor {
-  final ProviderRef _ref;
+  final Ref _ref;
 
   ResponseInterceptor(this._ref);
 
@@ -16,8 +16,10 @@ class ResponseInterceptor extends Interceptor {
   void onResponse(
       Response<dynamic> response, ResponseInterceptorHandler handler) {
     try {
-      if (_isLoginApi(response)) {
+      if (_isLoginApi(response) || _isSignUpPhase3Api(response)) {
         _saveAccessToken(response);
+      } else if (_isSignUpPhase1or2Api(response)) {
+        _saveTempAccessToken(response);
       }
       super.onResponse(response, handler);
       return;
@@ -28,14 +30,32 @@ class ResponseInterceptor extends Interceptor {
   }
 
   void _saveAccessToken(Response<dynamic> response) {
+    _ref.read(localDataSourceProvider).saveAccessToken(response.data['token']);
+  }
+
+  void _saveTempAccessToken(Response<dynamic> response) {
     _ref
         .read(localDataSourceProvider)
-        .saveAccessToken(response.data['token']['access']);
+        .saveTempAccessToken(response.data['token']);
   }
 
   bool _isLoginApi(Response<dynamic> response) {
     return response.realUri.toString() ==
             '${Endpoints.baseUrl}${Endpoints.login}' &&
-        response.data['token']['access'] != null;
+        response.data['token'] != null;
+  }
+
+  bool _isSignUpPhase1or2Api(Response<dynamic> response) {
+    return (response.realUri.toString() ==
+                '${Endpoints.baseUrl}${Endpoints.signupPhase1}' ||
+            response.realUri.toString() ==
+                '${Endpoints.baseUrl}${Endpoints.signupPhase2}') &&
+        response.data['token'] != null;
+  }
+
+  bool _isSignUpPhase3Api(Response<dynamic> response) {
+    return response.realUri.toString() ==
+            '${Endpoints.baseUrl}${Endpoints.signupPhase3}' &&
+        response.data['token'] != null;
   }
 }

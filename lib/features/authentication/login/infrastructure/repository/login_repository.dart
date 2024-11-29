@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
+import 'package:epp_user/core/base_class/base_success_response.dart';
+import 'package:epp_user/core/base_class/failure_response.dart';
 import 'package:epp_user/core/networks/api_helper.dart';
 import 'package:epp_user/core/networks/endpoint.dart';
+import 'package:epp_user/features/authentication/login/infrastructure/request/login_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import '../../../../../core/base_class/failure_response.dart';
-import '../response/login_response.dart';
 
 /// @author: Sagar K.C.
 /// @email: sagar.kc@fonepay.com
@@ -18,25 +18,20 @@ class LoginRepository {
 
   LoginRepository(this._ref);
 
-  Future<Either<LoginResponse, FailureResponse>> login(
-    String mobileNumber,
-    String uuid,
+  Future<Either<BaseSuccessResponse, FailureResponse>> login(
+    LoginRequest loginRequest,
   ) async {
     try {
       final apiClient = _ref.read(apiHelperProvider);
       final response = await apiClient.post(
         endPoint: Endpoints.login,
-        data: {
-          "phone_number": mobileNumber,
-          "uuid": uuid,
-        },
+        data: loginRequest.toJson(),
       );
-      print('Response from server is : ${response.data}');
       final data =
-          LoginResponse.fromJson(response.data as Map<String, dynamic>);
+          BaseSuccessResponse.fromJson(response.data as Map<String, dynamic>);
       return Left(data);
     } catch (e) {
-      return Right(FailureResponse("Error"));
+      return Right(FailureResponse.getErrorMessage(e));
     }
   }
 }

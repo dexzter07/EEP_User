@@ -11,7 +11,7 @@ import '../../local_data_source/local_data_source.dart';
 class RequestInterceptor extends Interceptor {
   RequestInterceptor(this._ref);
 
-  final ProviderRef _ref;
+  final Ref _ref;
 
   @override
   void onRequest(
@@ -21,9 +21,15 @@ class RequestInterceptor extends Interceptor {
     try {
       String accessToken =
           await _ref.read(localDataSourceProvider).getAccessToken();
+
+      String tempAccessToken =
+          await _ref.read(localDataSourceProvider).getTempAccessToken();
       if (accessToken.isNotEmpty) {
         options.headers
             .putIfAbsent('Authorization', () => 'Bearer $accessToken');
+      } else if (tempAccessToken.isNotEmpty) {
+        options.headers
+            .putIfAbsent('Authorization', () => 'Bearer $tempAccessToken');
       }
       // Handle null values in query parameters:
       options.queryParameters

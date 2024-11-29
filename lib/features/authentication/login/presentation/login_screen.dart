@@ -3,13 +3,13 @@ import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
+import 'package:epp_user/core/widgets/custom_asset_image.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
 import 'package:epp_user/core/widgets/custom_inkwell.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/core/widgets/custom_textfield.dart';
 import 'package:epp_user/features/authentication/login/application/login_controller.dart';
 import 'package:epp_user/features/authentication/login/infrastructure/response/login_response.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -31,7 +31,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   late final GlobalKey<FormState> _formKey;
 
   late final TextEditingController _mobileNumberController;
-  late final TextEditingController _otpController;
+  late final TextEditingController _passwordController;
 
   @override
   void initState() {
@@ -50,141 +50,137 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     _listenToLoginController(context);
     final loginApiState = ref.watch(loginController);
     return CustomScaffold(
+        enableSafeArea: false,
+        backgroundColor: ColorConstant.primaryColor,
         padding: EdgeInsets.zero,
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16,
-                        vertical: 16,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SizedBox(height: 52),
-                          Text(
-                            "Welcome to",
-                            textAlign: TextAlign.center,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontFamily: 'EbGaramond',
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 32,
-                                    ),
-                            textScaler: const TextScaler.linear(1),
-                          ),
-                          Text(
-                            "EEP Environment App",
-                            style:
-                                Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                      fontFamily: 'EbGaramond',
-                                      fontWeight: FontWeight.w600,
-                                      color: ColorConstant.primaryColor,
-                                      fontSize: 32,
-                                    ),
-                            textScaler: const TextScaler.linear(1),
-                          ),
-                          const SizedBox(height: 36),
-                          CustomTextField(
-                            controller: _mobileNumberController,
-                            labelText: "Mobile Number",
-                            prefixText: '+91-',
-                            textInputAction: TextInputAction.next,
-                            keyboardType: TextInputType.number,
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter valid mobile number";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                          const SizedBox(height: 4),
-                          CustomTextField(
-                            controller: _otpController,
-                            labelText: "Password",
-                            textInputAction: TextInputAction.done,
-                            keyboardType: TextInputType.text,
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter valid password";
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+        body: LayoutBuilder(builder: (context, constraints) {
+          return SingleChildScrollView(
+            physics: const ClampingScrollPhysics(),
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
               ),
-              CustomInkWell(
-                onTap: () async {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  context.push(
-                    AppRoutes.signUpPhase1Screen,
-                  );
-                },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: RichText(
-                    text: TextSpan(
-                      text: "Don't have an account? ",
-                      style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 14,
-                        fontFamily: "Poppins",
-                      ),
+              child: Form(
+                key: _formKey,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: const EdgeInsets.symmetric(horizontal: 16),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        TextSpan(
-                          text: 'Register',
-                          style: TextStyle(
-                            color: ColorConstant.primaryColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            fontFamily: "Poppins",
+                        const SizedBox(height: 8),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: const CustomAssetImage(
+                            'assets/images/logo.png',
+                            height: 60,
+                            width: 60,
                           ),
                         ),
+                        Text(
+                          "Eco Club Teachers",
+                          style:
+                              Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                    color: ColorConstant.primaryColor,
+                                    fontSize: 22,
+                                  ),
+                          textScaler: const TextScaler.linear(1),
+                        ),
+                        const SizedBox(height: 24),
+                        CustomTextField(
+                          controller: _mobileNumberController,
+                          labelText: "Mobile Number",
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.number,
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter valid mobile number";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 4),
+                        CustomTextField(
+                          controller: _passwordController,
+                          labelText: "Password",
+                          textInputAction: TextInputAction.done,
+                          obscureText: true,
+                          keyboardType: TextInputType.text,
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter valid password";
+                            } else {
+                              return null;
+                            }
+                          },
+                        ),
+                        const SizedBox(height: 8),
+                        _registerSection(context),
+                        _loginButton(
+                          context,
+                          loginApiState is LoadingState,
+                        ),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
-              _loginButton(
-                context,
-                loginApiState is LoadingState,
+            ),
+          );
+        }));
+  }
+
+  CustomInkWell _registerSection(BuildContext context) {
+    return CustomInkWell(
+      onTap: () async {
+        FocusManager.instance.primaryFocus?.unfocus();
+        context.push(
+          AppRoutes.signUpPhase1Screen,
+        );
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: RichText(
+          text: TextSpan(
+            text: "Don't have an account? ",
+            style: const TextStyle(
+              color: Colors.black,
+              fontSize: 14,
+              fontFamily: "Poppins",
+            ),
+            children: [
+              TextSpan(
+                text: 'Register',
+                style: TextStyle(
+                  color: ColorConstant.primaryColor,
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                  fontFamily: "Poppins",
+                ),
               ),
-              const SizedBox(height: 16),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   void _listenToLoginController(BuildContext context) {
     ref.listen(loginController, (previous, next) async {
-      if (next is SuccessState<LoginResponse>) {
-        context.showToast(
-          message: "Login Successful",
-          toastType: ToastType.success,
+      if (next is SuccessState) {
+        context.push(
+          AppRoutes.bottomNavScreen,
         );
-        await Future.delayed(const Duration(milliseconds: 600));
-        if (context.mounted) {
-          context.push(
-            AppRoutes.bottomNavScreen,
-          );
-        }
       } else if (next is FailureState) {
-        context.showToast(message: "We face some issue while logging you in");
+        context.showToast(message: next.failureResponse.errorMessage);
       }
     });
   }
@@ -196,33 +192,31 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return CustomButton(
       text: 'Login',
       isLoading: isLoading,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
       borderRadius: 8,
       onTap: () async {
-        context.push(
-          AppRoutes.bottomNavScreen,
-        );
-
-        /*
-        if (_formKey.currentState!.validate()) {
-          FocusManager.instance.primaryFocus?.unfocus();
-          await ref.read(loginController.notifier).login(
-                _mobileNumberController.text,
-                _otpController.text,
-              );
-        }*/
+        // if (_formKey.currentState?.validate() ?? false) {
+        FocusManager.instance.primaryFocus?.unfocus();
+        _loginApiCall();
+        // }
       },
     );
+  }
+
+  void _loginApiCall() {
+    ref.read(loginController.notifier).login(
+          phone: _mobileNumberController.text,
+          password: _passwordController.text,
+        );
   }
 
   void _initialiseControllers() {
     _formKey = GlobalKey<FormState>();
     _mobileNumberController = TextEditingController();
-    _otpController = TextEditingController();
+    _passwordController = TextEditingController();
   }
 
   void _disposeControllers() {
     _mobileNumberController.dispose();
-    _otpController.dispose();
+    _passwordController.dispose();
   }
 }
