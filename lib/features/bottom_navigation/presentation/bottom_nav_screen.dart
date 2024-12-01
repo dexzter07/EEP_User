@@ -1,7 +1,7 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
+import 'package:epp_user/features/activities/application/activity_controller.dart';
 import 'package:epp_user/features/activities/presentation/activities_list_screen.dart';
-import 'package:epp_user/features/activities/presentation/create_activity_screen.dart';
 import 'package:epp_user/features/resources/presentation/resources_screen.dart';
 import 'package:epp_user/features/temp_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +12,9 @@ import 'package:go_router/go_router.dart';
 /// @author: Sagar K.C.
 /// @email: sagar.kc@fonepay.com
 /// @created_at: 11/17/2024, Sunday
+
+final fetchDropDownListProvider =
+    StateNotifierProvider((ref) => ActivityController(ref));
 
 class BottomNavScreen extends ConsumerStatefulWidget {
   const BottomNavScreen({super.key});
@@ -32,6 +35,7 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
   @override
   void initState() {
     _changeStatusBarColor();
+    ref.read(fetchDropDownListProvider.notifier).fetchActivityDropdownList();
     super.initState();
   }
 

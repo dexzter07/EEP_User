@@ -41,7 +41,9 @@ class SignupController extends StateNotifier<BaseState> {
     String? schoolName,
     String? schoolType,
     String? schoolAffiliation,
-    String? schoolAddress,
+    String? stateName,
+    String? district,
+    String? pincode,
   }) async {
     state = LoadingState();
     final loginResponse = await _localAuthRepo.signupPhase2Api(
@@ -49,7 +51,9 @@ class SignupController extends StateNotifier<BaseState> {
         schoolName: schoolName,
         schoolType: schoolType,
         schoolAffiliation: schoolAffiliation,
-        schoolAddress: schoolAddress,
+        state: stateName,
+        district: district,
+        pincode: pincode,
       ),
     );
     state = loginResponse.fold(

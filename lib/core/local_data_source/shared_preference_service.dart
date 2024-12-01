@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// @email: sagar.kc@fonepay.com
 /// @created_at: 11/23/2023, Thursday
 
-
 class SharedPreferencesService {
   static SharedPreferencesService? _instance;
   static late SharedPreferences _preferences;
@@ -35,6 +34,10 @@ class SharedPreferencesService {
 
   bool? getBoolValue(String data) {
     return _preferences.getBool(data);
+  }
+
+  Future<bool> removeData(String key) async {
+    return await _preferences.remove(key);
   }
 
   //TODO : Make switch case for this approach.

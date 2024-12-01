@@ -73,6 +73,48 @@ class ActivityResponseData {
     this.isLiked,
   });
 
+  ActivityResponseData copyWith({
+    int? id,
+    String? activityTitle,
+    String? location,
+    String? activityDateAndTime,
+    String? activityEndDateAndTime,
+    String? description,
+    int? activityType,
+    String? image,
+    String? status,
+    String? userType,
+    String? userImage,
+    int? userId,
+    String? createdAt,
+    String? updatedAt,
+    String? activityTypeName,
+    int? totalLikes,
+    int? totalComment,
+    bool? isLiked,
+  }) {
+    return ActivityResponseData(
+      id: id ?? this.id,
+      activityTitle: activityTitle ?? this.activityTitle,
+      location: location ?? this.location,
+      activityDateAndTime: activityDateAndTime ?? this.activityDateAndTime,
+      activityEndDateAndTime: activityEndDateAndTime ?? this.activityEndDateAndTime,
+      description: description ?? this.description,
+      activityType: activityType ?? this.activityType,
+      image: image ?? this.image,
+      status: status ?? this.status,
+      userType: userType ?? this.userType,
+      userImage: userImage ?? this.userImage,
+      userId: userId ?? this.userId,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      activityTypeName: activityTypeName ?? this.activityTypeName,
+      totalLikes: totalLikes ?? this.totalLikes,
+      totalComment: totalComment ?? this.totalComment,
+      isLiked: isLiked ?? this.isLiked,
+    );
+  }
+
   factory ActivityResponseData.fromJson(Map<String, dynamic> json) {
     return ActivityResponseData(
       id: json['id'] as int?,
@@ -97,26 +139,27 @@ class ActivityResponseData {
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'activityTitle': activityTitle,
-      'location': location,
-      'activityDateAndTime': activityDateAndTime,
-      'activityEndDateAndTime': activityEndDateAndTime,
-      'description': description,
-      'activityType': activityType,
-      'image': image,
-      'status': status,
-      'userType': userType,
-      'userImage': userImage,
-      'userId': userId,
-      'created_at': createdAt,
-      'updated_at': updatedAt,
-      'activityTypeName': activityTypeName,
-      'totalLikes': totalLikes,
-      'totalComment': totalComment,
-      'isLiked': isLiked,
-    };
+    final Map<String, dynamic> data = {};
+    if (id != null) data['id'] = id;
+    if (activityTitle != null) data['activityTitle'] = activityTitle;
+    if (location != null) data['location'] = location;
+    if (activityDateAndTime != null) data['activityDateAndTime'] = activityDateAndTime;
+    if (activityEndDateAndTime != null) data['activityEndDateAndTime'] = activityEndDateAndTime;
+    if (description != null) data['description'] = description;
+    if (activityType != null) data['activityType'] = activityType;
+    if (image != null) data['image'] = image;
+    if (status != null) data['status'] = status;
+    if (userType != null) data['userType'] = userType;
+    if (userImage != null) data['userImage'] = userImage;
+    if (userId != null) data['userId'] = userId;
+    if (createdAt != null) data['createdAt'] = createdAt;
+    if (updatedAt != null) data['updatedAt'] = updatedAt;
+    if (activityTypeName != null) data['activityTypeName'] = activityTypeName;
+    if (totalLikes != null) data['totalLikes'] = totalLikes;
+    if (totalComment != null) data['totalComment'] = totalComment;
+    if (isLiked != null) data['isLiked'] = isLiked;
+
+    return data;
   }
 }
 

@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/features/activities/infrastructure/repository/activity_repository.dart';
+import 'package:epp_user/features/activities/infrastructure/response/activity_dropdown_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_list_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/comment_list_response.dart';
@@ -8,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// @author: Sagar K.C.
 /// @email: sagar.kc@fonepay.com
 /// @created_at: 11/25/2024, Monday
+
+final activityDropDownListProvider = StateProvider((ref) => <ActivityData?>[]);
 
 class ActivityController extends StateNotifier<BaseState> {
   ActivityController(this._ref) : super(InitialState());
@@ -19,7 +24,14 @@ class ActivityController extends StateNotifier<BaseState> {
     ActivityResponseData activityResponseData,
   ) async {
     state = LoadingState();
-    final response = await _activityRepo.createActivity(activityResponseData);
+    String? uploadImageApiResponse;
+    if (activityResponseData.image != null) {
+      uploadImageApiResponse =
+          await getImageUrl(File(activityResponseData.image!));
+    }
+    final response = await _activityRepo.createActivity(
+      activityResponseData.copyWith(image: uploadImageApiResponse),
+    );
     state = response.fold(
       (success) => SuccessState<ActivityCreateResponse>(data: success),
       (failure) => FailureState(failureResponse: failure),
@@ -52,5 +64,22 @@ class ActivityController extends StateNotifier<BaseState> {
       (success) => SuccessState<List<CommentData>?>(data: success.data),
       (failure) => FailureState(failureResponse: failure),
     );
+  }
+
+  Future<String?> getImageUrl(File imageFile) async {
+    final response = await _activityRepo.getImageUrl(imageFile);
+    return response.fold(
+      (success) => success.fileUrl ?? '',
+      (failure) => null,
+    );
+  }
+
+  Future<void> fetchActivityDropdownList() async {
+    print('asdasdas');
+    final response = await _activityRepo.fetchActivityDropdownList();
+    response.fold(
+        (success) => _ref.read(activityDropDownListProvider.notifier).state =
+            success.data ?? [],
+        (failure) => null);
   }
 }

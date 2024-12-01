@@ -44,7 +44,7 @@ class LocalDataSource {
         accessToken,
       );
     } catch (e) {
-      throw 'Error while saving access token : $e';
+      throw 'Error while saving temp access token : $e';
     }
   }
 
@@ -57,7 +57,20 @@ class LocalDataSource {
       );
       return accessToken;
     } catch (e) {
-      throw 'Error while fetching access token : $e';
+      throw 'Error while fetching temp access token : $e';
+    }
+  }
+
+  Future<bool> removeTempAccessToken() async {
+    try {
+      final SharedPreferencesService sharedPreferencesService =
+          SharedPreferencesService();
+      final result = sharedPreferencesService.removeData(
+        SharedPreferenceConstants.tempAccessToken,
+      );
+      return result;
+    } catch (e) {
+      throw 'Error while removing temp access token : $e';
     }
   }
 }

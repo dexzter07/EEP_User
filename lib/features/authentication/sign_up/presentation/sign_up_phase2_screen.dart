@@ -3,11 +3,14 @@ import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
+import 'package:epp_user/core/networks/static_data/state_information.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
+import 'package:epp_user/core/widgets/custom_dropdown_button.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/core/widgets/custom_textfield.dart';
 import 'package:epp_user/features/authentication/sign_up/application/sign_up_controller.dart';
 import 'package:epp_user/features/authentication/sign_up/presentation/widgets/step_tracker_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -29,9 +32,8 @@ class SignUpPhase2Screen extends ConsumerStatefulWidget {
 class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
   late final GlobalKey<FormState> _formKey;
   late final TextEditingController _schoolNameController;
-  late final TextEditingController _addressController;
-  late final TextEditingController _typeController;
   late final TextEditingController _affiliationController;
+  late final TextEditingController _pincodeController;
 
   @override
   void initState() {
@@ -45,11 +47,14 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
     super.dispose();
   }
 
+  SchoolTypes? _schoolType;
+  int? _stateIndex;
+  int? _districtIndex;
+
   @override
   Widget build(BuildContext context) {
     _listenToSignupApi2Controller(context);
     final apiState = ref.watch(signupApi2Controller);
-
     return BackButtonListener(
       onBackButtonPressed: () async {
         ref.read(stepCounterCurrentIndexProvider.notifier).state = 1;
@@ -103,32 +108,72 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                             },
                           ),
                           const SizedBox(height: 4),
-                          CustomTextField(
-                            controller: _addressController,
-                            labelText: "School Address",
-                            textInputAction: TextInputAction.next,
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter valid address";
-                              } else {
-                                return null;
+                          CustomDropdownButton(
+                            labelText: 'School Type',
+                            items: const [
+                              DropdownMenuItem(
+                                value: SchoolTypes.Private,
+                                child: Text('Primary'),
+                              ),
+                              DropdownMenuItem(
+                                value: SchoolTypes.Public,
+                                child: Text('Secondary'),
+                              ),
+                            ],
+                            onChanged: (value) {
+                              if (value is SchoolTypes) {
+                                setState(() {
+                                  _schoolType = value;
+                                });
                               }
                             },
+                            value: _schoolType,
                           ),
-                          const SizedBox(height: 4),
-                          CustomTextField(
-                            controller: _typeController,
-                            labelText: "School Type",
-                            textInputAction: TextInputAction.next,
-                            validator: (String? value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please enter valid school type";
-                              } else {
-                                return null;
+                          const SizedBox(height: 16),
+                          CustomDropdownButton(
+                            labelText: 'State',
+                            items: stateName
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: stateName.indexOf(e),
+                                    child: Text(e["name"]),
+                                  ),
+                                )
+                                .toList(),
+                            onChanged: (value) {
+                              if (value is int) {
+                                setState(() {
+                                  _districtIndex = null;
+                                  _stateIndex = value;
+                                });
                               }
                             },
+                            value: _stateIndex,
                           ),
-                          const SizedBox(height: 4),
+                          const SizedBox(height: 16),
+                          CustomDropdownButton(
+                            labelText: 'Districts',
+                            items: _stateIndex == null
+                                ? []
+                                : (stateName[_stateIndex!]["districts"]
+                                        as List<String>)
+                                    .map((e) => DropdownMenuItem(
+                                          value: stateName[_stateIndex!]
+                                                  ["districts"]
+                                              .indexOf(e),
+                                          child: Text(e),
+                                        ))
+                                    .toList(),
+                            onChanged: (value) {
+                              if (value is int) {
+                                setState(() {
+                                  _districtIndex = value;
+                                });
+                              }
+                            },
+                            value: _districtIndex,
+                          ),
+                          const SizedBox(height: 16),
                           CustomTextField(
                             controller: _affiliationController,
                             labelText: "Affiliation Type",
@@ -136,6 +181,18 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                             validator: (String? value) {
                               if (value == null || value.isEmpty) {
                                 return "Please enter valid affiliation type";
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          CustomTextField(
+                            controller: _pincodeController,
+                            labelText: "PinCode",
+                            textInputAction: TextInputAction.done,
+                            validator: (String? value) {
+                              if (value == null || value.isEmpty) {
+                                return "Please enter valid Pincode";
                               } else {
                                 return null;
                               }
@@ -177,24 +234,24 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
   void _signupPhase2ApiCall() {
     ref.read(signupApi2Controller.notifier).signupApi2(
           schoolName: _schoolNameController.text,
-          schoolType: _typeController.text,
+          schoolType: _schoolType?.name,
           schoolAffiliation: _affiliationController.text,
-          schoolAddress: _addressController.text,
+          stateName: stateName[_stateIndex ?? 0]["name"],
+          district: stateName[_stateIndex ?? 0]["districts"][_districtIndex],
+          pincode: _pincodeController.text,
         );
   }
 
   void _initialiseControllers() {
     _formKey = GlobalKey<FormState>();
     _schoolNameController = TextEditingController();
-    _addressController = TextEditingController();
-    _typeController = TextEditingController();
+    _pincodeController = TextEditingController();
     _affiliationController = TextEditingController();
   }
 
   void _disposeControllers() {
     _schoolNameController.dispose();
-    _addressController.dispose();
-    _typeController.dispose();
+    _pincodeController.dispose();
     _affiliationController.dispose();
   }
 

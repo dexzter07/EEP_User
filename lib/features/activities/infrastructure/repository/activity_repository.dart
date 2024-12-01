@@ -1,11 +1,18 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
+import 'package:epp_user/core/base_class/base_success_response.dart';
 import 'package:epp_user/core/networks/api_helper.dart';
 import 'package:epp_user/core/networks/endpoint.dart';
 import 'package:epp_user/features/activities/infrastructure/fake_data.dart';
+import 'package:epp_user/features/activities/infrastructure/response/activity_dropdown_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_list_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/comment_list_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:mime/mime.dart';
 
 import '../../../../../core/base_class/failure_response.dart';
 
@@ -27,7 +34,7 @@ class ActivityRepository {
     try {
       final apiClient = _ref.read(apiHelperProvider);
       final response = await apiClient.post(
-        endPoint: Endpoints.login,
+        endPoint: Endpoints.createActivity,
         data: activityResponseData.toJson(),
       );
       final data = ActivityCreateResponse.fromJson(
@@ -35,7 +42,7 @@ class ActivityRepository {
       );
       return Left(data);
     } catch (e) {
-      return Right(FailureResponse("Error"));
+      return Right(FailureResponse.getErrorMessage(e));
     }
   }
 
@@ -46,7 +53,7 @@ class ActivityRepository {
     try {
       final apiClient = _ref.read(apiHelperProvider);
       final response = await apiClient.get(
-        endPoint: Endpoints.login,
+        endPoint: Endpoints.fetchCommentList,
         queryParams: {
           'limit': 10,
           'page': pageNumber,
@@ -57,7 +64,7 @@ class ActivityRepository {
           ActivityListResponse.fromJson(response.data as Map<String, dynamic>);
       return Left(data);
     } catch (e) {
-      return Right(FailureResponse("Error"));
+      return Right(FailureResponse.getErrorMessage(e));
     }
   }
 
@@ -75,7 +82,52 @@ class ActivityRepository {
     } catch (e) {
       return Left(CommentListResponse.fromJson(fakeCommentListResponse));
 
-      return Right(FailureResponse("Error"));
+      return Right(FailureResponse.getErrorMessage(e));
+    }
+  }
+
+  Future<Either<BaseSuccessResponse, FailureResponse>> getImageUrl(
+    File imageFile,
+  ) async {
+    try {
+      var mimeType =
+          lookupMimeType(imageFile.path) ?? 'application/octet-stream';
+      final apiClient = _ref.read(apiHelperProvider);
+      var file = await MultipartFile.fromFile(
+        imageFile.path,
+        filename: imageFile.path.split('/').last,
+        contentType: MediaType.parse(mimeType),
+      );
+      FormData formData = FormData.fromMap({
+        'file': file,
+      });
+
+      final response = await apiClient.post(
+        endPoint: Endpoints.uploadImage,
+        data: formData,
+        options: Options(contentType: Headers.multipartFormDataContentType),
+      );
+      final data =
+          BaseSuccessResponse.fromJson(response.data as Map<String, dynamic>);
+      return Left(data);
+    } catch (e) {
+      return Right(FailureResponse.getErrorMessage(e));
+    }
+  }
+
+  Future<Either<ActivityDropDownResponse, FailureResponse>>
+      fetchActivityDropdownList() async {
+    try {
+      final apiClient = _ref.read(apiHelperProvider);
+      final response = await apiClient.get(
+        endPoint: Endpoints.fetchDropdownList,
+      );
+      final data = ActivityDropDownResponse.fromJson(
+        response.data as Map<String, dynamic>,
+      );
+      return Left(data);
+    } catch (e) {
+      return Right(FailureResponse.getErrorMessage(e));
     }
   }
 }

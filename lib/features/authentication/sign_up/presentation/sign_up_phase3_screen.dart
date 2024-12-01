@@ -103,7 +103,6 @@ class _SignUpPhase3ScreenState extends ConsumerState<SignUpPhase3Screen> {
                           CustomTextField(
                             controller: _mobileNumberController,
                             labelText: "Mobile Number",
-                            prefixText: '+91-',
                             textInputAction: TextInputAction.next,
                             keyboardType: TextInputType.number,
                             validator: (String? value) {

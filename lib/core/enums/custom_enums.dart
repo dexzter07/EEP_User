@@ -3,3 +3,8 @@ enum ToastType {
   warning,
   error,
 }
+
+enum SchoolTypes {
+  Public,
+  Private,
+}

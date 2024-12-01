@@ -26,7 +26,7 @@ class ActivitiesListScreen extends ConsumerStatefulWidget {
 class _ActivitiesListScreenState extends ConsumerState<ActivitiesListScreen> {
   @override
   void initState() {
-    _fetchActivityList();
+    // _fetchActivityList();
     super.initState();
   }
 

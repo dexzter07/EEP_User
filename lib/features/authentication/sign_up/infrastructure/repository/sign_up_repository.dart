@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:epp_user/core/base_class/base_success_response.dart';
 import 'package:epp_user/core/base_class/failure_response.dart';
+import 'package:epp_user/core/local_data_source/local_data_source.dart';
 import 'package:epp_user/core/networks/api_helper.dart';
 import 'package:epp_user/core/networks/endpoint.dart';
 import 'package:epp_user/features/authentication/sign_up/infrastructure/entities/request/sign_up_phase1_request.dart';
@@ -63,6 +64,7 @@ class SignupRepository {
       );
       final data =
           BaseSuccessResponse.fromJson(response.data as Map<String, dynamic>);
+      _ref.read(localDataSourceProvider).removeTempAccessToken();
       return Left(data);
     } catch (e) {
       return Right(FailureResponse.getErrorMessage(e));
