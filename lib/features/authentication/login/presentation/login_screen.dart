@@ -118,6 +118,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               return null;
                             }
                           },
+                          onFieldSubmitted: (_) {
+                            _loginApiCall();
+                          },
                         ),
                         const SizedBox(height: 8),
                         _registerSection(context),
@@ -174,7 +177,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void _listenToLoginController(BuildContext context) {
     ref.listen(loginController, (previous, next) async {
       if (next is SuccessState) {
-        context.push(
+        context.go(
           AppRoutes.bottomNavScreen,
         );
       } else if (next is FailureState) {
@@ -192,10 +195,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       isLoading: isLoading,
       borderRadius: 8,
       onTap: () async {
-        // if (_formKey.currentState?.validate() ?? false) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        _loginApiCall();
-        // }
+        if (_formKey.currentState?.validate() ?? false) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _loginApiCall();
+        }
       },
     );
   }

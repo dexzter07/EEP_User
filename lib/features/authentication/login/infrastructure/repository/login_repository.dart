@@ -31,6 +31,7 @@ class LoginRepository {
           BaseSuccessResponse.fromJson(response.data as Map<String, dynamic>);
       return Left(data);
     } catch (e) {
+      print('asdad :$e');
       return Right(FailureResponse.getErrorMessage(e));
     }
   }

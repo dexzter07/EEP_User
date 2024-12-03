@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:epp_user/core/networks/endpoint.dart';
 
 /// @author: Sagar K.C.
 /// @email: sagar.kc@fonepay.com
@@ -8,19 +9,25 @@ class FailureResponse {
   final String errorMessage;
   final String? statusCode;
   final CustomExceptionType? exceptionType;
-  final String? captcha;
-  final String? captchaToken;
 
   FailureResponse(
     this.errorMessage, {
     this.statusCode,
     this.exceptionType,
-    this.captcha,
-    this.captchaToken,
   });
 
   static FailureResponse getErrorMessage(Object error) {
     if (error is DioException) {
+      print('adsdasdas  : ${error.response}');
+
+      if (error.requestOptions.path == Endpoints.login &&
+          error.response?.statusCode == 401) {
+        print('adsdasdas  : ${error.response?.data?["message"]}');
+        return FailureResponse(
+          error.response?.data?["message"],
+          statusCode: '401',
+        );
+      }
       if (error.type == DioExceptionType.connectionError) {
         return FailureResponse(
           'Connection Error',

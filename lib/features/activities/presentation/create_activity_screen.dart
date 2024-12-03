@@ -10,6 +10,7 @@ import 'package:epp_user/core/widgets/custom_inkwell.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/core/widgets/custom_textfield.dart';
 import 'package:epp_user/features/activities/application/activity_controller.dart';
+import 'package:epp_user/features/activities/infrastructure/response/activity_dropdown_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_list_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_response.dart';
 import 'package:flutter/material.dart';
@@ -140,30 +141,7 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
                         const SizedBox(height: 4),
                         _endDateAndTimeWidget(context),
                         const SizedBox(height: 4),
-                        CustomDropdownButton(
-                          labelText: 'Type',
-                          validator: (_) {
-                            if (_activityTypeIndex == null) {
-                              return "Please select a valid type";
-                            } else {
-                              return null;
-                            }
-                          },
-                          items: activityDropDownList
-                              .map((e) => DropdownMenuItem(
-                                    value: e?.id,
-                                    child: Text(e?.title ?? ''),
-                                  ))
-                              .toList(),
-                          onChanged: (value) {
-                            if (value is int) {
-                              setState(() {
-                                _activityTypeIndex = value;
-                              });
-                            }
-                          },
-                          value: _activityTypeIndex,
-                        ),
+                        _activityTypeWidget(activityDropDownList),
                         const SizedBox(height: 16),
                         _imageUploadWidget(context),
                         const SizedBox(height: 4),
@@ -180,6 +158,34 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
             ],
           ),
         ));
+  }
+
+  CustomDropdownButton _activityTypeWidget(
+      List<ActivityData?> activityDropDownList) {
+    return CustomDropdownButton(
+      labelText: 'Type',
+      validator: (_) {
+        if (_activityTypeIndex == null) {
+          return "Please select a valid type";
+        } else {
+          return null;
+        }
+      },
+      items: activityDropDownList
+          .map((e) => DropdownMenuItem(
+                value: e?.id,
+                child: Text(e?.title ?? ''),
+              ))
+          .toList(),
+      onChanged: (value) {
+        if (value is int) {
+          setState(() {
+            _activityTypeIndex = value;
+          });
+        }
+      },
+      value: _activityTypeIndex,
+    );
   }
 
   Row _dateAndTimeWidget(BuildContext context) {
@@ -295,7 +301,7 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
             child: CustomTextField(
               isEnabled: false,
               controller: _endTimeController,
-              labelText: 'Time',
+              labelText: 'End Time',
               suffixIcon: const Icon(Icons.access_time_outlined),
             ),
           ),

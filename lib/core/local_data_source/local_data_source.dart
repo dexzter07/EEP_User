@@ -35,6 +35,19 @@ class LocalDataSource {
     }
   }
 
+  Future<bool> removeAccessToken() async {
+    try {
+      final SharedPreferencesService sharedPreferencesService =
+          SharedPreferencesService();
+      final result = sharedPreferencesService.removeData(
+        SharedPreferenceConstants.accessToken,
+      );
+      return result;
+    } catch (e) {
+      throw 'Error while removing temp access token : $e';
+    }
+  }
+
   Future<void> saveTempAccessToken(String accessToken) async {
     try {
       final SharedPreferencesService sharedPreferencesService =

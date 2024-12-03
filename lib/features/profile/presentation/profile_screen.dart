@@ -1,6 +1,7 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
+import 'package:epp_user/core/local_data_source/local_data_source.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
 import 'package:epp_user/core/widgets/custom_inkwell.dart';
 import 'package:epp_user/core/widgets/custom_network_image.dart';
@@ -158,6 +159,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         title: 'Privacy Policy',
                         iconData: Icons.bookmark_add_outlined,
                         onTap: () {},
+                      ),
+                      _getProfileOptionsWidget(
+                        title: 'Log Out',
+                        iconData: Icons.exit_to_app,
+                        onTap: () {
+                          ref.read(localDataSourceProvider).removeAccessToken();
+                          context.go(AppRoutes.loginScreen);
+                        },
                       ),
                     ],
                   ),
