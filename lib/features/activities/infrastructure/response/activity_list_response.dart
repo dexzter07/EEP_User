@@ -98,7 +98,8 @@ class ActivityResponseData {
       activityTitle: activityTitle ?? this.activityTitle,
       location: location ?? this.location,
       activityDateAndTime: activityDateAndTime ?? this.activityDateAndTime,
-      activityEndDateAndTime: activityEndDateAndTime ?? this.activityEndDateAndTime,
+      activityEndDateAndTime:
+          activityEndDateAndTime ?? this.activityEndDateAndTime,
       description: description ?? this.description,
       activityType: activityType ?? this.activityType,
       image: image ?? this.image,
@@ -143,8 +144,10 @@ class ActivityResponseData {
     if (id != null) data['id'] = id;
     if (activityTitle != null) data['activityTitle'] = activityTitle;
     if (location != null) data['location'] = location;
-    if (activityDateAndTime != null) data['activityDateAndTime'] = activityDateAndTime;
-    if (activityEndDateAndTime != null) data['activityEndDateAndTime'] = activityEndDateAndTime;
+    if (activityDateAndTime != null)
+      data['activityDateAndTime'] = activityDateAndTime;
+    if (activityEndDateAndTime != null)
+      data['activityEndDateAndTime'] = activityEndDateAndTime;
     if (description != null) data['description'] = description;
     if (activityType != null) data['activityType'] = activityType;
     if (image != null) data['image'] = image;

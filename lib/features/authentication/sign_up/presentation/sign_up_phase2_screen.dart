@@ -186,6 +186,7 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                               }
                             },
                           ),
+                          const SizedBox(height: 4),
                           CustomTextField(
                             controller: _pincodeController,
                             labelText: "PinCode",

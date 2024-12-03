@@ -8,3 +8,4 @@ enum SchoolTypes {
   Public,
   Private,
 }
+

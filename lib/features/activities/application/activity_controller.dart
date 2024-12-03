@@ -6,6 +6,7 @@ import 'package:epp_user/features/activities/infrastructure/response/activity_dr
 import 'package:epp_user/features/activities/infrastructure/response/activity_list_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/activity_response.dart';
 import 'package:epp_user/features/activities/infrastructure/response/comment_list_response.dart';
+import 'package:epp_user/features/activities/presentation/activity_list_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 /// @author: Sagar K.C.
@@ -38,18 +39,35 @@ class ActivityController extends StateNotifier<BaseState> {
     );
   }
 
-  Future<void> fetchActivityList(
-    int pageNumber,
-    int activityType,
-  ) async {
+  Future<void> fetchActivityList() async {
     state = LoadingState();
-    await Future.delayed(const Duration(seconds: 2));
     final response = await _activityRepo.fetchActivityList(
-      pageNumber,
-      activityType,
+      pageNumber: 1,
     );
     state = response.fold(
       (success) {
+        _ref.read(activityListProvider.notifier).state.clear();
+        _ref.read(activityListProvider.notifier).state = [
+          ...success.data ?? []
+        ];
+        return SuccessState<ActivityListResponse>(data: success);
+      },
+      (failure) => FailureState(failureResponse: failure),
+    );
+  }
+
+  Future<void> loadMoreActivityList(int pageNumber) async {
+    state = LoadingState();
+    final response =
+        await _activityRepo.fetchActivityList(pageNumber: pageNumber);
+    state = response.fold(
+      (success) {
+        final oldData = _ref.read(activityListProvider);
+        final newData = [
+          ...oldData,
+          ...success.data ?? [],
+        ];
+        _ref.read(activityListProvider.notifier).state = [...newData];
         return SuccessState<ActivityListResponse>(data: success);
       },
       (failure) => FailureState(failureResponse: failure),

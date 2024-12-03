@@ -1,7 +1,6 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
-import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';

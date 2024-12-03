@@ -7,6 +7,8 @@ import 'package:epp_user/features/authentication/sign_up/presentation/sign_up_ph
 import 'package:epp_user/features/authentication/sign_up/presentation/sign_up_phase2_screen.dart';
 import 'package:epp_user/features/authentication/sign_up/presentation/sign_up_phase3_screen.dart';
 import 'package:epp_user/features/bottom_navigation/presentation/bottom_nav_screen.dart';
+import 'package:epp_user/features/profile/infrastructure/response/profile_details_response.dart';
+import 'package:epp_user/features/profile/presentation/profile_details_screen.dart';
 import 'package:epp_user/features/splash_screen/presentation/splash_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -66,16 +68,16 @@ final _appRouter = GoRouter(
             return const ActivityDetailScreen();
           }
         }),
-    /*  GoRoute(
-        path: AppRoutes.loginScreen,
+    GoRoute(
+        path: AppRoutes.profileDetailScreen,
         builder: (context, state) {
-          if (state.extra is LoginType) {
-            return LoginScreen(loginType: state.extra as LoginType);
-          } else if (state.extra == true) {
-            return const LoginScreen(isFromSignupScreen: true);
+          if (state.extra is ProfileData) {
+            return ProfileDetailsScreen(
+              profileData: state.extra as ProfileData,
+            );
           } else {
-            return const LoginScreen();
+            return const ProfileDetailsScreen();
           }
-        }),*/
+        }),
   ],
 );

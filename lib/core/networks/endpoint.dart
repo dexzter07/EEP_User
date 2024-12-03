@@ -1,5 +1,6 @@
 class Endpoints {
   static const baseUrl = 'http://3.109.108.92/api/teacher/';
+
   // static const baseUrl = 'https://1b16-115-96-137-46.ngrok-free.app/api/teacher/';
 
   //Authentication
@@ -11,6 +12,12 @@ class Endpoints {
   //Activity
   static const createActivity = 'createActivity';
   static const uploadImage = 'upload/activity';
+  static const fetchActivityList = 'fetchActivityList';
   static const fetchCommentList = 'fetchCommentListByActivityId/';
   static const fetchDropdownList = 'fetchActivityTypeDropdown';
+
+  //Profile
+  static const uploadProfilePicture = 'upload/profile-picture';
+  static const fetchProfileDetails = 'fetchProfileDetails';
+  static const updateProfile = 'updateProfile';
 }

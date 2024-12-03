@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
+import 'package:epp_user/core/constants/image_path.dart';
 import 'package:flutter/material.dart';
 
 import 'custom_shimmer.dart';
@@ -36,7 +37,6 @@ class CustomNetworkImage extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius:
                     BorderRadius.circular(isCircular ? 100 : radius ?? 8),
-                border: Border.all(color: ColorConstant.textFieldColor),
                 image: DecorationImage(
                   image: imageProvider,
                   fit: BoxFit.cover,
@@ -60,8 +60,10 @@ class CustomNetworkImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(isCircular ? 100 : radius ?? 8),
         border: Border.all(color: ColorConstant.textFieldColor),
         image: const DecorationImage(
-          image: AssetImage('assets/images/profile.png'),
-          fit: BoxFit.contain,
+          image: AssetImage(
+            ImagePath.defaultUserImage,
+          ),
+          fit: BoxFit.cover,
         ),
       ),
     );

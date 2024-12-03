@@ -17,6 +17,7 @@ class CustomDropdownButton extends ConsumerStatefulWidget {
     this.borderRadius,
     this.validator,
     this.autovalidateMode,
+    this.isEnabled = true,
   });
 
   final List<DropdownMenuItem<Object>>? items;
@@ -29,6 +30,7 @@ class CustomDropdownButton extends ConsumerStatefulWidget {
   final double? borderRadius;
   final String? Function(Object? value)? validator;
   final AutovalidateMode? autovalidateMode;
+  final bool isEnabled;
 
   @override
   CustomDropdownButtonState createState() => CustomDropdownButtonState();
@@ -41,7 +43,10 @@ class CustomDropdownButtonState extends ConsumerState<CustomDropdownButton> {
       validator: widget.validator,
       hint: widget.hint,
       autovalidateMode: widget.autovalidateMode,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: widget.inputTextStyle ??
+          Theme.of(context).textTheme.bodyMedium?.copyWith(
+            color: widget.isEnabled ? Colors.black : Colors.grey,
+          ),
       items: widget.items,
       onChanged: widget.onChanged,
       icon: const Icon(

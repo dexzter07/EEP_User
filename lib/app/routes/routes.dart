@@ -7,4 +7,6 @@ class AppRoutes {
   static const String bottomNavScreen = '/bottomNavScreen';
   static const String createActivityScreen = '/createActivityScreen';
   static const String activityDetailScreen = '/activityDetailScreen';
+
+  static const String profileDetailScreen  = '/profileDetailScreen';
 }

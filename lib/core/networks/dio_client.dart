@@ -28,7 +28,7 @@ final dioProvider = Provider<Dio>((ref) {
       ),
     RequestInterceptor(ref),
     ResponseInterceptor(ref),
-    ErrorInterceptor(ref),
+    ErrorInterceptor(),
     // AliceSetup().alice.getDioInterceptor(),
   ]);
   return dio;

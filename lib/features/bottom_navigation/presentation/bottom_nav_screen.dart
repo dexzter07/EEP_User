@@ -1,7 +1,8 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/features/activities/application/activity_controller.dart';
-import 'package:epp_user/features/activities/presentation/activities_list_screen.dart';
+import 'package:epp_user/features/activities/presentation/activity_list_screen.dart';
+import 'package:epp_user/features/profile/presentation/profile_screen.dart';
 import 'package:epp_user/features/resources/presentation/resources_screen.dart';
 import 'package:epp_user/features/temp_screen.dart';
 import 'package:flutter/material.dart';
@@ -26,10 +27,10 @@ class BottomNavScreen extends ConsumerStatefulWidget {
 class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
   int _index = 0;
   final List<Widget> _screenList = const [
-    ActivitiesListScreen(),
+    ActivityListScreen(),
     ResourcesScreen(),
     TempScreen(),
-    ResourcesScreen(),
+    ProfileScreen(),
   ];
 
   @override

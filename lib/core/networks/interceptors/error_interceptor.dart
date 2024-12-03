@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/app.dart';
 
@@ -10,9 +9,7 @@ import '../../../app/app.dart';
 /// @created_at: 12/13/2023, Wednesday
 
 class ErrorInterceptor extends Interceptor {
-  ErrorInterceptor(this._ref);
-
-  final ProviderRef _ref;
+  ErrorInterceptor();
 
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {

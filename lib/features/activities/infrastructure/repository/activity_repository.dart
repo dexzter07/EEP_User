@@ -46,18 +46,22 @@ class ActivityRepository {
     }
   }
 
-  Future<Either<ActivityListResponse, FailureResponse>> fetchActivityList(
-    int pageNumber,
-    int activityType,
-  ) async {
+  Future<Either<ActivityListResponse, FailureResponse>> fetchActivityList({
+    int? pageNumber,
+    int? activityType,
+    int? userRestriction,
+  }) async {
     try {
       final apiClient = _ref.read(apiHelperProvider);
       final response = await apiClient.get(
-        endPoint: Endpoints.fetchCommentList,
+        endPoint: Endpoints.fetchActivityList,
         queryParams: {
-          'limit': 10,
-          'page': pageNumber,
-          'typeOfActivity': activityType,
+          'limit': 5,
+          'page': pageNumber ?? 1,
+          'typeOfActivity': activityType ?? 0,
+          // 0 - All, 1 - Upcoming, 2 - Past, 3 - Ongoing
+          'userRestriction': userRestriction ?? 0,
+          // 0 - All Users, 1 - Activities of logged in user
         },
       );
       final data =
@@ -82,7 +86,7 @@ class ActivityRepository {
     } catch (e) {
       return Left(CommentListResponse.fromJson(fakeCommentListResponse));
 
-      return Right(FailureResponse.getErrorMessage(e));
+      // return Right(FailureResponse.getErrorMessage(e));
     }
   }
 

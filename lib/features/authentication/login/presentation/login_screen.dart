@@ -1,7 +1,6 @@
 import 'package:epp_user/app/routes/routes.dart';
 import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
-import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
 import 'package:epp_user/core/widgets/custom_asset_image.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
@@ -9,7 +8,6 @@ import 'package:epp_user/core/widgets/custom_inkwell.dart';
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/core/widgets/custom_textfield.dart';
 import 'package:epp_user/features/authentication/login/application/login_controller.dart';
-import 'package:epp_user/features/authentication/login/infrastructure/response/login_response.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';

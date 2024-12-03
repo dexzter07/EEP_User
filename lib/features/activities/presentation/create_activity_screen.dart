@@ -23,7 +23,7 @@ import 'package:intl/intl.dart';
 /// @created_at: 11/25/2024, Monday
 
 final uploadActivityController =
-    StateNotifierProvider((ref) => ActivityController(ref));
+    StateNotifierProvider.autoDispose((ref) => ActivityController(ref));
 
 class CreateActivityScreen extends ConsumerStatefulWidget {
   const CreateActivityScreen({super.key});
@@ -423,21 +423,31 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
   }
 
   Future<void> _pickImage() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? img = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 20,
-    );
-    if (img == null) return;
+    try {
+      final ImagePicker picker = ImagePicker();
+      final XFile? img = await picker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 20,
+      );
+      if (img == null) return;
 
-    final File imageFile = File(img.path);
-    final int fileSize = await imageFile.length(); // Get file size in bytes
+      final File imageFile = File(img.path);
+      final int fileSizeInBytes = await imageFile.length();
+      final double fileSizeInMB = fileSizeInBytes / (1024 * 1024);
 
-    print("Image size: ${fileSize / (1024 * 1024)} MB");
-
-    setState(() {
-      _imagePath = img.path;
-    });
+      if (fileSizeInMB > 1 && mounted) {
+        context.showToast(message: "Image size must be less than 1MB");
+        return;
+      }
+      setState(() {
+        _imagePath = img.path;
+      });
+    } catch (e) {
+      if (mounted) {
+        context.showToast(
+            message: "We faced some issue while updating the image");
+      }
+    }
   }
 
   void _initialiseControllers() {

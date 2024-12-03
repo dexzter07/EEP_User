@@ -130,7 +130,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         maxLength: widget.maxLength,
         onEditingComplete: widget.onEditingComplete,
         obscureText: widget.obscureText ? _isTextObscure : false,
-        style: widget.inputTextStyle ?? Theme.of(context).textTheme.bodyMedium,
+        style: widget.inputTextStyle ??
+            Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: widget.isEnabled ? Colors.black : Colors.grey,
+                ),
         focusNode: widget.focusNode,
         onChanged: widget.onChanged,
         validator: widget.validator,
@@ -211,7 +214,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderRadius: BorderRadius.circular(widget.borderRadius ?? 8),
                 borderSide: BorderSide(
                   color: widget.focusedBorderSideColor ??
-                      ColorConstant.textFieldColor,
+                      ColorConstant.greyTextColor,
                 ),
                 borderColor: Colors.transparent,
               ),
