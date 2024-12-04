@@ -36,36 +36,33 @@ class CustomScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: enableSafeArea,
-      child: Scaffold(
-        resizeToAvoidBottomInset: true,
-        appBar: appBarTitle == null
-            ? null
-            : AppBar(
-                elevation: 4,
-                centerTitle: centerTitle,
-                title: Text(
-                  appBarTitle ?? '',
-                  style: const TextStyle(color: Colors.black, fontSize: 16),
-                ),
-                leading: hideLeadingIcon
-                    ? const SizedBox()
-                    : CustomInkWell(
-                        onTap: onLeadingIconPress ?? context.pop,
-                        child: const Icon(Icons.arrow_back, size: 20),
-                      ),
-                backgroundColor: ColorConstant.scaffoldColor,
-                actions: [appBarActionButton ?? const SizedBox()],
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: appBarTitle == null
+          ? null
+          : AppBar(
+              elevation: 4,
+              centerTitle: centerTitle,
+              title: Text(
+                appBarTitle ?? '',
+                style: const TextStyle(color: Colors.black, fontSize: 16),
               ),
-        backgroundColor: backgroundColor ?? ColorConstant.scaffoldColor,
-        body: Padding(
-          padding:
-              padding ?? const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-          child: body,
-        ),
-        floatingActionButton: floatingActionButton,
+              leading: hideLeadingIcon
+                  ? const SizedBox()
+                  : CustomInkWell(
+                      onTap: onLeadingIconPress ?? context.pop,
+                      child: const Icon(Icons.arrow_back, size: 20),
+                    ),
+              backgroundColor: ColorConstant.scaffoldColor,
+              actions: [appBarActionButton ?? const SizedBox()],
+            ),
+      backgroundColor: backgroundColor ?? ColorConstant.scaffoldColor,
+      body: Padding(
+        padding:
+            padding ?? const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+        child: body,
       ),
+      floatingActionButton: floatingActionButton,
     );
   }
 }

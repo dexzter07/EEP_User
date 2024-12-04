@@ -1,13 +1,11 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:epp_user/core/base_class/base_state.dart';
 import 'package:epp_user/core/base_class/base_success_response.dart';
 import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/extensions/context_extension.dart';
 import 'package:epp_user/core/networks/static_data/state_information.dart';
-import 'package:epp_user/core/widgets/custom_asset_image.dart';
 import 'package:epp_user/core/widgets/custom_button.dart';
 import 'package:epp_user/core/widgets/custom_dropdown_button.dart';
 import 'package:epp_user/core/widgets/custom_inkwell.dart';
@@ -17,7 +15,6 @@ import 'package:epp_user/core/widgets/custom_textfield.dart';
 import 'package:epp_user/features/profile/application/profile_controller.dart';
 import 'package:epp_user/features/profile/infrastructure/response/profile_details_response.dart';
 import 'package:epp_user/features/profile/presentation/profile_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -87,7 +84,6 @@ class _ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
     _listenToUpdateProfileDetailsController(context);
     _listenToUpdateProfilePictureController(context);
     return CustomScaffold(
-
       appBarTitle: 'Profile Details',
       padding: const EdgeInsets.symmetric(vertical: 16),
       body: Form(
@@ -107,7 +103,7 @@ class _ProfileDetailsScreenState extends ConsumerState<ProfileDetailsScreen> {
                           File(_imagePath!),
                           height: 90,
                           width: 90,
-                          fit: BoxFit.fill,
+                          fit: BoxFit.cover,
                         ),
                       )
                     else

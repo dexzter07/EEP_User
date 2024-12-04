@@ -354,7 +354,7 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
                       File(_imagePath!),
                       height: 120,
                       width: 120,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
