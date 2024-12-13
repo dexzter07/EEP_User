@@ -9,6 +9,7 @@ import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:epp_user/core/widgets/custom_shimmer.dart';
 import 'package:epp_user/features/profile/application/profile_controller.dart';
 import 'package:epp_user/features/profile/infrastructure/response/profile_details_response.dart';
+import 'package:epp_user/features/profile/presentation/widgets/logout_confirmation_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -164,8 +165,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         title: 'Log Out',
                         iconData: Icons.exit_to_app,
                         onTap: () {
-                          ref.read(localDataSourceProvider).removeAccessToken();
-                          context.go(AppRoutes.loginScreen);
+                          showModalBottomSheet<dynamic>(
+                            scrollControlDisabledMaxHeightRatio: 0.18,
+                            isScrollControlled: false,
+                            enableDrag: false,
+                            context: context,
+                            backgroundColor: ColorConstant.scaffoldColor,
+                            builder: (context) {
+                              return const LogoutConfirmationSheet();
+                            },
+                          );
                         },
                       ),
                     ],

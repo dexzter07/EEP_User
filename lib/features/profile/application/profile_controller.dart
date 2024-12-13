@@ -46,9 +46,14 @@ class ProfileController extends StateNotifier<BaseState> {
   Future<void> uploadProfilePicture(File imageFile) async {
     state = LoadingState();
     final response = await _profileRepo.uploadProfilePicture(imageFile);
-    state = response.fold(
-      (success) => SuccessState<BaseSuccessResponse>(data: success),
-      (failure) => FailureState(failureResponse: failure),
-    );
+    state = await response.fold((success) async {
+      final newResponse = await _profileRepo.updateProfilePicture(
+        userImage: success.fileUrl ?? '',
+      );
+      return newResponse.fold(
+        (newSuccess) => SuccessState(data: newSuccess),
+        (newFailure) => FailureState(failureResponse: newFailure),
+      );
+    }, (failure) => FailureState(failureResponse: failure));
   }
 }

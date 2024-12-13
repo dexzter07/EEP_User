@@ -128,6 +128,13 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                               }
                             },
                             value: _schoolType,
+                            validator: (var name) {
+                              if (name == null) {
+                                return 'Please select a school type';
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
                           const SizedBox(height: 16),
                           CustomDropdownButton(
@@ -149,6 +156,13 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                               }
                             },
                             value: _stateIndex,
+                            validator: (var name) {
+                              if (name == null) {
+                                return 'Please select a state';
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
                           const SizedBox(height: 16),
                           CustomDropdownButton(
@@ -172,6 +186,13 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
                               }
                             },
                             value: _districtIndex,
+                            validator: (var name) {
+                              if (name == null) {
+                                return 'Please select a district';
+                              } else {
+                                return null;
+                              }
+                            },
                           ),
                           const SizedBox(height: 16),
                           CustomTextField(
@@ -224,10 +245,10 @@ class _SignUpPhase2ScreenState extends ConsumerState<SignUpPhase2Screen> {
       isLoading: isLoading,
       borderRadius: 8,
       onTap: () async {
-        // if (_formKey.currentState?.validate() ?? false) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        _signupPhase2ApiCall();
-        // }
+        if (_formKey.currentState?.validate() ?? false) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _signupPhase2ApiCall();
+        }
       },
     );
   }

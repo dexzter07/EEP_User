@@ -173,10 +173,10 @@ class _SignUpPhase1ScreenState extends ConsumerState<SignUpPhase1Screen> {
       isLoading: isLoading,
       borderRadius: 8,
       onTap: () async {
-        // if (_formKey.currentState?.validate() ?? false) {
-        FocusManager.instance.primaryFocus?.unfocus();
-        _signupPhase1ApiCall();
-        // }
+        if (_formKey.currentState?.validate() ?? false) {
+          FocusManager.instance.primaryFocus?.unfocus();
+          _signupPhase1ApiCall();
+        }
       },
     );
   }

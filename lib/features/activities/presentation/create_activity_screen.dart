@@ -72,28 +72,38 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
           message: "Activity created successfully",
           toastType: ToastType.success,
         );
-        context.pop();
+        context.pop(true);
       } else if (next is FailureState) {
         context.showToast(message: next.failureResponse.errorMessage);
       }
     });
 
     return CustomScaffold(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 16,
-        ),
-        appBarTitle: 'Create New Activity',
-        body: Form(
-          key: _formKey,
-          child: Column(
-            children: [
-              Expanded(
-                child: ListView(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Column(
+        backgroundColor: ColorConstant.primaryColor,
+        padding: EdgeInsets.zero,
+        body: LayoutBuilder(builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: constraints.maxHeight,
+              ),
+              child: Form(
+                key: _formKey,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    margin: EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: MediaQuery.of(context)
+                          .viewInsets
+                          .bottom, // Adjust for keyboard
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.white,
+                    ),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const SizedBox(height: 8),
@@ -114,6 +124,7 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
                         CustomTextField(
                           controller: _descriptionController,
                           labelText: "Description",
+                          maxLines: 5,
                           textInputAction: TextInputAction.next,
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -144,20 +155,19 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
                         _activityTypeWidget(activityDropDownList),
                         const SizedBox(height: 16),
                         _imageUploadWidget(context),
-                        const SizedBox(height: 4),
+                        const SizedBox(height: 24),
+                        _continueButton(
+                          context,
+                          uploadActivityApiState is LoadingState,
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-              const SizedBox(height: 24),
-              _continueButton(
-                context,
-                uploadActivityApiState is LoadingState,
-              ),
-            ],
-          ),
-        ));
+            ),
+          );
+        }));
   }
 
   CustomDropdownButton _activityTypeWidget(
@@ -198,7 +208,7 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
               var date = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(1930),
+                  firstDate: DateTime.now(),
                   lastDate: DateTime(2080));
 
               if (date != null) {
@@ -256,10 +266,17 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
           child: InkWell(
             onTap: () async {
               FocusScope.of(context).unfocus();
+              if (_startDateController.text.isEmpty ||
+                  _startTimeController.text.isEmpty) {
+                context.showToast(
+                    message: 'Please select the Start Date and time first');
+                return;
+              }
+
               var date = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
-                  firstDate: DateTime(1930),
+                  firstDate: DateTime.parse(_startDateController.text),
                   lastDate: DateTime(2080));
 
               if (date != null) {
@@ -279,6 +296,12 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
           child: InkWell(
             onTap: () async {
               FocusScope.of(context).unfocus();
+              if (_startDateController.text.isEmpty ||
+                  _startTimeController.text.isEmpty) {
+                context.showToast(
+                    message: 'Please select the Start Date and time first');
+                return;
+              }
               var time = await showTimePicker(
                 context: context,
                 initialTime: TimeOfDay.now(),
@@ -296,6 +319,9 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
                 String hour = time.hour.toString().padLeft(2, '0');
                 String minute = time.minute.toString().padLeft(2, '0');
                 _endTimeController.text = '$hour:$minute';
+                if (context.mounted) {
+                  _validateTime(time, context);
+                }
               }
             },
             child: CustomTextField(
@@ -308,6 +334,26 @@ class _CreateActivityScreenState extends ConsumerState<CreateActivityScreen> {
         ),
       ],
     );
+  }
+
+  void _validateTime(TimeOfDay time, BuildContext context) {
+    if (_startDateController.text == _endDateController.text) {
+      TimeOfDay startTime = TimeOfDay(
+        hour: int.parse(_startTimeController.text.split(':')[0]),
+        minute: int.parse(_startTimeController.text.split(':')[1]),
+      );
+      TimeOfDay endTime = TimeOfDay(
+        hour: time.hour,
+        minute: time.minute,
+      );
+
+      if (endTime.hour < startTime.hour ||
+          (endTime.hour == startTime.hour &&
+              endTime.minute < startTime.minute)) {
+        context.showToast(message: 'End Time cannot be before start time');
+        _endTimeController.clear();
+      }
+    }
   }
 
   InkWell _imageUploadWidget(BuildContext context) {

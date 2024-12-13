@@ -20,4 +20,5 @@ class Endpoints {
   static const uploadProfilePicture = 'upload/profile-picture';
   static const fetchProfileDetails = 'fetchProfileDetails';
   static const updateProfile = 'updateProfile';
+  static const updateTeacherProfilePicture = 'updateTeacherProfilePicture';
 }

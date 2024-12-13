@@ -17,6 +17,8 @@ import 'package:go_router/go_router.dart';
 final fetchDropDownListProvider =
     StateNotifierProvider((ref) => ActivityController(ref));
 
+final showRefreshIconInHomeScreenProvider = StateProvider((ref) => false);
+
 class BottomNavScreen extends ConsumerStatefulWidget {
   const BottomNavScreen({super.key});
 
@@ -46,10 +48,14 @@ class _BottomNavScreenState extends ConsumerState<BottomNavScreen> {
       body: _screenList[_index],
       bottomNavigationBar: _bottomNavBarWidget(context),
       floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            context.push(
+          onPressed: () async {
+            var result = await context.push(
               AppRoutes.createActivityScreen,
             );
+            if (result == true) {
+              ref.read(showRefreshIconInHomeScreenProvider.notifier).state =
+                  true;
+            }
           },
           backgroundColor: ColorConstant.primaryColor,
           label: Row(

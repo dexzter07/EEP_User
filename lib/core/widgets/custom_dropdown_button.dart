@@ -56,6 +56,7 @@ class CustomDropdownButtonState extends ConsumerState<CustomDropdownButton> {
       value: widget.value,
       isExpanded: true,
       decoration: InputDecoration(
+        errorStyle: const TextStyle(color: Colors.red, fontSize: 10),
         filled: true,
         fillColor: ColorConstant.textFieldColor,
         labelText: widget.labelText,

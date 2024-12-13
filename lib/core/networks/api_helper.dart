@@ -24,11 +24,11 @@ class ApiHelper {
     Map<String, dynamic>? queryParams,
     dynamic data,
     Options? options,
-    bool? isDelete,
+    bool? isPatch,
     bool? isPut,
   }) async {
-    return isDelete == true
-        ? await _dio.delete(
+    return isPatch == true
+        ? await _dio.patch(
             options: options,
             endPoint,
             queryParameters: queryParams,

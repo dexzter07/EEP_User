@@ -85,4 +85,23 @@ class ProfileRepository {
       return Right(FailureResponse.getErrorMessage(e));
     }
   }
+
+  Future<Either<BaseSuccessResponse, FailureResponse>> updateProfilePicture({
+    required String userImage,
+  }) async {
+    try {
+      final apiClient = _ref.read(apiHelperProvider);
+      final response = await apiClient.post(
+          endPoint: Endpoints.updateTeacherProfilePicture,
+          isPatch: true,
+          data: {
+            "userImage": userImage,
+          });
+      final data =
+          BaseSuccessResponse.fromJson(response.data as Map<String, dynamic>);
+      return Left(data);
+    } catch (e) {
+      return Right(FailureResponse.getErrorMessage(e));
+    }
+  }
 }
