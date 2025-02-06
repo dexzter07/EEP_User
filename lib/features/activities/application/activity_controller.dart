@@ -9,10 +9,6 @@ import 'package:epp_user/features/activities/infrastructure/response/comment_lis
 import 'package:epp_user/features/activities/presentation/activity_list_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 final activityDropDownListProvider = StateProvider((ref) => <ActivityData?>[]);
 
 class ActivityController extends StateNotifier<BaseState> {

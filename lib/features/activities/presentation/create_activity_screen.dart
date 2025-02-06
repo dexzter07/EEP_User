@@ -19,10 +19,6 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 final uploadActivityController =
     StateNotifierProvider.autoDispose((ref) => ActivityController(ref));
 

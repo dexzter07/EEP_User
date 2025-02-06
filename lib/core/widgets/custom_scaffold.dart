@@ -4,10 +4,6 @@ import 'package:go_router/go_router.dart';
 
 import '../constants/color_constants.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 9/13/2024, Friday
-
 class CustomScaffold extends StatelessWidget {
   final String? appBarTitle;
   final Widget? appBarActionButton;

@@ -4,10 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../infrastructure/response/activity_list_response.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 class ActivityDetailScreen extends ConsumerStatefulWidget {
   final ActivityResponseData? activityResponseData;
 

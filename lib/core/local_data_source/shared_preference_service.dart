@@ -1,9 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/23/2023, Thursday
-
 class SharedPreferencesService {
   static SharedPreferencesService? _instance;
   static late SharedPreferences _preferences;

@@ -11,10 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:mime/mime.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 final profileRepositoryProvider =
     Provider<ProfileRepository>((ref) => ProfileRepository(ref));
 

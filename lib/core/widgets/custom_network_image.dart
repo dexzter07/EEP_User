@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'custom_shimmer.dart';
 
-/// @author: Sagar KC
-/// @email: sagar.kc@fonepay.com
-/// @created_at:  11/9/2022, Wednesday
-
 class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage({
     this.image,

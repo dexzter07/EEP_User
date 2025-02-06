@@ -2,10 +2,6 @@ import 'package:flutter/cupertino.dart';
 
 import '../constants/image_path.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 6/15/2024, Saturday
-
 class CustomAssetImage extends StatelessWidget {
   final String path;
   final double? height;

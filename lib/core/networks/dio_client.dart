@@ -8,11 +8,6 @@ import 'interceptors/request_interceptor.dart';
 import 'interceptors/response_interceptor.dart';
 import 'network_constant.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 12/18/2023, Monday
-
-
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio();
   dio.options.baseUrl = Endpoints.baseUrl;

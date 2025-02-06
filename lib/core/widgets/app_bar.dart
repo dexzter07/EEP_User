@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
 
-
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 5/17/2024, Friday
-
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
@@ -42,7 +37,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ],
           onSelected: (value) {
-      /*      if (value == 1) {
+            /*      if (value == 1) {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => const AboutScreen()),
               );

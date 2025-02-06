@@ -9,10 +9,6 @@ import 'package:epp_user/features/authentication/sign_up/infrastructure/entities
 import 'package:epp_user/features/authentication/sign_up/infrastructure/entities/request/sign_up_phase3_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 9/13/2024, Friday
-
 final signupRepositoryProvider =
     Provider<SignupRepository>((ref) => SignupRepository(ref));
 

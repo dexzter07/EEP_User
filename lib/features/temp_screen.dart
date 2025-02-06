@@ -1,10 +1,6 @@
 import 'package:epp_user/core/widgets/custom_scaffold.dart';
 import 'package:flutter/material.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 class TempScreen extends StatelessWidget {
   const TempScreen({super.key});
 

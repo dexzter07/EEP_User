@@ -1,9 +1,5 @@
 import 'failure_response.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/29/2023, Wednesday
-
 abstract class BaseState {}
 
 class InitialState extends BaseState {}

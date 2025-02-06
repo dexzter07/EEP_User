@@ -4,10 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'custom_asset_image.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 6/15/2024, Saturday
-
 class CustomCircularContainerWidget extends ConsumerWidget {
   final String imagePath;
   final double? height;

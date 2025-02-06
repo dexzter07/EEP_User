@@ -1,10 +1,6 @@
 import 'package:epp_user/core/constants/color_constants.dart';
 import 'package:flutter/material.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 6/14/2024, Friday
-
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,

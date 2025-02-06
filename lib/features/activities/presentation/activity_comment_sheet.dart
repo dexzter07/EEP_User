@@ -13,10 +13,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/27/2024, Wednesday
-
 final fetchActivityCommentListProvider =
     StateNotifierProvider((ref) => ActivityController(ref));
 
@@ -142,7 +138,7 @@ class _ActivityCommentScreenState extends ConsumerState<ActivityCommentScreen> {
                     color: ColorConstant.primaryColor.withOpacity(0.8),
                   ),
                 ),
-                 ),
+              ),
             ],
           ),
           const SizedBox(height: 6)

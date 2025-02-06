@@ -3,10 +3,6 @@ import 'package:epp_user/features/resources/presentation/widgets/resource_list_w
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/27/2024, Wednesday
-
 class ResourcesScreen extends ConsumerStatefulWidget {
   const ResourcesScreen({super.key});
 

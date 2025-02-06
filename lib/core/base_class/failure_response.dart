@@ -1,10 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:epp_user/core/networks/endpoint.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/29/2023, Wednesday
-
 class FailureResponse {
   final String errorMessage;
   final String? statusCode;

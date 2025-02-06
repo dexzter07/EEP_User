@@ -3,10 +3,6 @@ import 'package:epp_user/features/activities/infrastructure/response/comment_lis
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/27/2024, Wednesday
-
 class CommentWidget extends ConsumerWidget {
   final CommentData? commentData;
 

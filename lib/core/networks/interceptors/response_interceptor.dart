@@ -3,10 +3,6 @@ import 'package:epp_user/core/local_data_source/local_data_source.dart';
 import 'package:epp_user/core/networks/endpoint.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 12/13/2023, Wednesday
-
 class ResponseInterceptor extends Interceptor {
   final Ref _ref;
 

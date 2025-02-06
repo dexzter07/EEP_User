@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 6/14/2024, Friday
-
 class CustomText extends StatelessWidget {
   final String text;
   final TextStyle? style;

@@ -5,10 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../../app/app.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 12/13/2023, Wednesday
-
 class ErrorInterceptor extends Interceptor {
   ErrorInterceptor();
 
@@ -34,7 +30,7 @@ class ErrorInterceptor extends Interceptor {
     }
   }
 
-  bool _isFromAuthApi(DioError error) {
+  bool _isFromAuthApi(DioException error) {
     return error.requestOptions.uri.toString().contains(Endpoints.login);
   }
 }

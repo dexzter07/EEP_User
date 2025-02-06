@@ -2,10 +2,6 @@ import 'package:epp_user/core/local_data_source/shared_preference_constants.dart
 import 'package:epp_user/core/local_data_source/shared_preference_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 9/30/2024, Monday
-
 final localDataSourceProvider = StateProvider((ref) => LocalDataSource());
 
 class LocalDataSource {

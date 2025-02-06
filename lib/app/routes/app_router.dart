@@ -13,10 +13,6 @@ import 'package:epp_user/features/splash_screen/presentation/splash_screen.dart'
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/26/2023, Sunday
-
 final appRouterProvider = Provider<GoRouter>((ref) => _appRouter);
 
 final _appRouter = GoRouter(

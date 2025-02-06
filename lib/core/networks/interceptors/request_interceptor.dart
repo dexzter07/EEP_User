@@ -5,10 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../local_data_source/local_data_source.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 12/13/2023, Wednesday
-
 class RequestInterceptor extends Interceptor {
   RequestInterceptor(this._ref);
 

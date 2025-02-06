@@ -4,10 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../infrastructure/repository/login_repository.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 9/13/2024, Friday
-
 class LoginController extends StateNotifier<BaseState> {
   LoginController(this._ref) : super(InitialState());
 

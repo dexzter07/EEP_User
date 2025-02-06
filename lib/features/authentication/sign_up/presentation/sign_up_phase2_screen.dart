@@ -15,10 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/17/2024, Sunday
-
 final signupApi2Controller =
     StateNotifierProvider((ref) => SignupController(ref));
 

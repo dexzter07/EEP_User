@@ -13,10 +13,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../infrastructure/fake_data.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 final fetchActivityListProvider =
     StateNotifierProvider((ref) => ActivityController(ref));
 

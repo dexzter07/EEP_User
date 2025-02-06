@@ -2,10 +2,6 @@ import 'package:epp_user/core/enums/custom_enums.dart';
 import 'package:epp_user/core/widgets/custom_toast_widget.dart';
 import 'package:flutter/material.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 9/13/2024, Friday
-
 extension ContextExtension on BuildContext {
   List<BoxShadow> get boxShadow => [
         BoxShadow(

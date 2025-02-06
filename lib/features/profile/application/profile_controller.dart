@@ -12,10 +12,6 @@ import 'package:epp_user/features/profile/infrastructure/repository/profile_repo
 import 'package:epp_user/features/profile/infrastructure/response/profile_details_response.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 class ProfileController extends StateNotifier<BaseState> {
   ProfileController(this._ref) : super(InitialState());
   final Ref<dynamic> _ref;

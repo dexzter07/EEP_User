@@ -16,10 +16,6 @@ import 'package:mime/mime.dart';
 
 import '../../../../../core/base_class/failure_response.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 11/25/2024, Monday
-
 final activityRepositoryProvider =
     Provider<ActivityRepository>((ref) => ActivityRepository(ref));
 

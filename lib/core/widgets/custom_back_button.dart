@@ -3,11 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'custom_inkwell.dart';
 
-
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 6/16/2024, Sunday
-
 class CustomIconContainer extends ConsumerWidget {
   final double? height;
   final double? width;

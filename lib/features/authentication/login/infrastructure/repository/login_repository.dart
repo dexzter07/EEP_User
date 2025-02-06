@@ -6,10 +6,6 @@ import 'package:epp_user/core/networks/endpoint.dart';
 import 'package:epp_user/features/authentication/login/infrastructure/request/login_request.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-/// @author: Sagar K.C.
-/// @email: sagar.kc@fonepay.com
-/// @created_at: 9/13/2024, Friday
-
 final loginRepositoryProvider =
     Provider<LoginRepository>((ref) => LoginRepository(ref));
 
